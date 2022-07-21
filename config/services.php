@@ -32,6 +32,7 @@ return [
     ],
 
     'vk' => [
-        'client_id' => (int) env('VK_API_CLIENT_ID', 0)
+        'client_id' => (int) env('VK_API_CLIENT_ID', 0),
+        'access_token' => env('VK_API_ACCESS_TOKEN')
     ]
 ];
