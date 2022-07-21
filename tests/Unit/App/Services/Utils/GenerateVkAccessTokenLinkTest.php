@@ -4,7 +4,6 @@ namespace Tests\Unit\App\Services\Utils;
 
 use App\Services\Vk\Utils\GenerateVkAccessTokenLink;
 use Tests\TestCase;
-use VK\OAuth\VKOAuth;
 
 class GenerateVkAccessTokenLinkTest extends TestCase
 {
