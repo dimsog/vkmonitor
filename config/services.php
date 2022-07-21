@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'vk' => [
+        'client_id' => env('VK_API_CLIENT_ID')
+    ]
 ];
