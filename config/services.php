@@ -32,6 +32,6 @@ return [
     ],
 
     'vk' => [
-        'client_id' => env('VK_API_CLIENT_ID')
+        'client_id' => (int) env('VK_API_CLIENT_ID', 0)
     ]
 ];
