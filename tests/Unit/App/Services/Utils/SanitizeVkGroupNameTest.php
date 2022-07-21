@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\App\Services\Utils;
 
-use App\Services\Utils\SanitizeVkGroupName;
+use App\Services\Vk\Utils\SanitizeVkGroupName;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
