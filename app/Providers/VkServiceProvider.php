@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\Vk\UsersCountByGroup;
+use App\Services\Vk\UsersFetcher;
 use App\Services\Vk\Utils\GenerateVkAccessTokenLink;
 use Illuminate\Support\ServiceProvider;
 use VK\Client\VKApiClient;
@@ -21,6 +22,14 @@ class VkServiceProvider extends ServiceProvider
         $this->app->bind(UsersCountByGroup::class, function () {
             return new UsersCountByGroup(
                 config('services.vk.access_token'),
+                $this->app->make(VKApiClient::class)
+            );
+        });
+
+        $this->app->bind(UsersFetcher::class, function () {
+            return new UsersFetcher(
+                config('services.vk.access_token'),
+                $this->app->make(UsersCountByGroup::class),
                 $this->app->make(VKApiClient::class)
             );
         });
