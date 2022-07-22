@@ -12,8 +12,8 @@ use VK\OAuth\VKOAuthResponseType;
 class GenerateVkAccessTokenLink
 {
     public function __construct(
-        private int $clientId,
-        private VKOAuth $vkOAuth
+        private readonly int $clientId,
+        private readonly VKOAuth $vkOAuth
     ) {}
 
     public function generate(): string
