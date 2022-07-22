@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\App\Services;
+namespace Tests\Unit\App\Services\Vk;
 
 use App\Services\Vk\UsersFetcher;
 use Mockery\MockInterface;

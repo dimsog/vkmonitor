@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\App\Services\Utils;
+namespace Tests\Unit\App\Services\Vk\Utils;
 
 use App\Services\Vk\Utils\SanitizeVkGroupName;
 use PHPUnit\Framework\TestCase;

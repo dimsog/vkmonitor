@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\App\Services\Utils;
+namespace Tests\Unit\App\Services\Vk\Utils;
 
 use App\Services\Vk\Utils\GenerateVkAccessTokenLink;
 use Tests\TestCase;
