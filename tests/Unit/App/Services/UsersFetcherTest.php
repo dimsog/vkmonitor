@@ -25,6 +25,16 @@ class UsersFetcherTest extends TestCase
                         'count' => 2000,
                         'items' => range(1, 2000)
                     ]);
+
+                    $mock->shouldReceive('getById')->andReturn([
+                        [
+                            'id' => 1,
+                            'members_count' => 2000,
+                            'name' => 'ВКонтакте API',
+                            'screen_name' => 'apiclub',
+                            'photo_200' => '/path/to/photo'
+                        ]
+                    ]);
                 })
             );
         });
@@ -34,6 +44,6 @@ class UsersFetcherTest extends TestCase
 
     public function testUsers()
     {
-        $this->assertEquals(range(1, 2000), $this->usersFetcher->fetch('motelblvck'));
+        $this->assertEquals(range(1, 2000), $this->usersFetcher->fetch('apiclub'));
     }
 }

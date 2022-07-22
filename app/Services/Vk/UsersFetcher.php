@@ -16,7 +16,7 @@ class UsersFetcher
 
     public function __construct(
         private readonly string $accessToken,
-        private readonly UsersCountByGroup $usersCountByGroup,
+        private readonly GroupInfoFetcher $groupInfoFetcher,
         private readonly VKApiClient $apiClient
     ) {}
 
@@ -29,7 +29,8 @@ class UsersFetcher
      */
     public function fetch(string $groupId): array
     {
-        $usersCount = $this->usersCountByGroup->count($groupId);
+        $groupInfo = $this->groupInfoFetcher->getGroupInfoById($groupId);
+        $usersCount = $groupInfo->membersCount;
         $totalPages = $this->calculateTotalPages($usersCount);
 
         $result = [];
