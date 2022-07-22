@@ -21,7 +21,7 @@ class UsersFetcher
     ) {}
 
     /**
-     * @param string $groupId
+     * @param int|string $groupId
      * @return array
      * @throws VKApiParamGroupIdException
      * @throws VKApiException
