@@ -31,6 +31,10 @@ class Statistic extends Model
 {
     use HasFactory;
 
+    public const TYPE_USER_SUBSCRIBED = 1;
+
+    public const TYPE_USER_UNSUBSCRIBED = -1;
+
     public $timestamps = false;
 
 
