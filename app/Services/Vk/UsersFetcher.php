@@ -34,7 +34,7 @@ class UsersFetcher
         $totalPages = $this->calculateTotalPages($usersCount);
 
         $result = [];
-        for ($i = 0; $i < $totalPages - 1; $i++) {
+        for ($i = 0; $i < $totalPages; $i++) {
             $response = $this->apiClient->groups()->getMembers($this->accessToken, [
                 'group_id' => $groupId,
                 'sort' => 'id_asc',
