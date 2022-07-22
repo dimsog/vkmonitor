@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('statistics', function (Blueprint $table) {
-            $table->integerIncrements('id');
+        Schema::create('vk_user_diffs', function (Blueprint $table) {
+            $table->id();
             $table->date('date');
-            $table->unsignedInteger('group_id')->index();
+            $table->unsignedInteger('group_id');
             $table->unsignedInteger('user_id');
-            $table->tinyInteger('type')->index();
-            $table->unsignedTinyInteger('initial')->index();
+            $table->tinyInteger('subscribed');
+
+            $table->index(['date', 'group_id']);
+            $table->index(['date', 'group_id', 'user_id', 'subscribed']);
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statistics');
+        Schema::dropIfExists('vk_user_diffs');
     }
 };
