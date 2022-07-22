@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->unsignedInteger('group_id')->index();
             $table->unsignedInteger('user_id');
-            $table->unsignedTinyInteger('type')->index();
+            $table->tinyInteger('type')->index();
             $table->unsignedTinyInteger('initial')->index();
         });
     }
