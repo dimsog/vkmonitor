@@ -23,7 +23,7 @@ class UsersFetcherTest extends TestCase
                 $this->mock(Groups::class, static function (MockInterface $mock): void {
                     $mock->shouldReceive('getMembers')->andReturn([
                         'count' => 2000,
-                        'items' => range(1, 2000)
+                        'items' => range(1, 1000)
                     ]);
 
                     $mock->shouldReceive('getById')->andReturn([
@@ -44,6 +44,6 @@ class UsersFetcherTest extends TestCase
 
     public function testUsers()
     {
-        $this->assertEquals(range(1, 2000), $this->usersFetcher->fetch('apiclub'));
+        $this->assertEquals([...range(1, 1000), ...range(1, 1000)], $this->usersFetcher->fetch('apiclub'));
     }
 }
