@@ -27,7 +27,7 @@ class UsersFetcher
      * @throws VKApiException
      * @throws VKClientException
      */
-    public function fetch(string $groupId): array
+    public function fetch(int|string $groupId): array
     {
         $groupInfo = $this->groupInfoFetcher->getGroupInfoById($groupId);
         $usersCount = $groupInfo->membersCount;
