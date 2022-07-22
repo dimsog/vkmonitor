@@ -12,4 +12,11 @@ class Statistic extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+
+    public static function isExistVkGroup(int $groupId): bool
+    {
+        return static::where('group_id', $groupId)
+            ->exists();
+    }
 }
