@@ -6,6 +6,7 @@ namespace Tests\Unit\App\Services\Statistics;
 
 use App\Models\VkUser;
 use App\Models\VkUserDiff;
+use App\Services\Statistics\GroupExistsChecker;
 use App\Services\Statistics\StatisticHandler;
 use App\Services\Vk\Dto\GroupInfo;
 use App\Services\Vk\UsersFetcher;
@@ -17,6 +18,14 @@ class StatisticsHandlerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private GroupExistsChecker $groupExistsChecker;
+
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->groupExistsChecker = $this->app->make(GroupExistsChecker::class);
+    }
 
     public function testHandle()
     {
@@ -30,9 +39,9 @@ class StatisticsHandlerTest extends TestCase
 
         $statisticHandler = $this->makeStatisticHandler(range(1, 100));
 
-        $this->assertFalse(VkUser::isExistVkGroup(1));
+        $this->assertFalse($this->groupExistsChecker->isExists(1));
         $statisticHandler->handle($groupInfo);
-        $this->assertTrue(VkUser::isExistVkGroup(1));
+        $this->assertTrue($this->groupExistsChecker->isExists(1));
 
         $userIds = VkUser::findUserIdsByGroupId(1);
         $this->assertSame(range(1, 100), $userIds);
