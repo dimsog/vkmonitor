@@ -23,12 +23,6 @@ class VkUser extends Model
     public $timestamps = false;
 
 
-    public static function isExistVkGroup(int $groupId): bool
-    {
-        return static::where('group_id', $groupId)
-            ->exists();
-    }
-
     public static function deleteUsersByGroup(int $groupId): int
     {
         return static::where('group_id', $groupId)

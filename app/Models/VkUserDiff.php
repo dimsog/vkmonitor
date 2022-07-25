@@ -47,7 +47,7 @@ class VkUserDiff extends Model
             ->orderByDesc('date')
             ->get();
         $result = [];
-        if (empty($users)) {
+        if ($users->isEmpty()) {
             return [];
         }
         $currentDate = $users[0]->date;
