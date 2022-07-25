@@ -27,7 +27,6 @@ class GroupController extends Controller
         $groupInfo = $this->groupInfoFetcher->getGroupInfoById($groupId);
         if (!Group::existsByVkGroupId($groupInfo->id)) {
             ImportUsersFromGroup::dispatch($groupInfo->id);
-            var_dump(123);
             return [
                 'success' => true,
                 'data' => [
