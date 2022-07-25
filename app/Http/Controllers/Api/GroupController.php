@@ -7,10 +7,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Jobs\ImportUsersFromGroup;
 use App\Models\Group;
-use App\Models\GroupUser;
 use App\Models\GroupUserDiff;
 use App\Services\Vk\GroupInfoFetcher;
-use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
