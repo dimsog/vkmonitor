@@ -22,9 +22,9 @@ class GroupController extends Controller
     )
     {}
 
-    public function read(string $groupId): array
+    public function read(string $vkGroupId): array
     {
-        $groupInfo = $this->groupInfoFetcher->getGroupInfoById($groupId);
+        $groupInfo = $this->groupInfoFetcher->getGroupInfoById($vkGroupId);
         if (!Group::existsByVkGroupId($groupInfo->id)) {
             ImportUsersFromGroup::dispatch($groupInfo->id);
             return [
