@@ -20,7 +20,7 @@ class ImportUsersFromGroup implements ShouldQueue, ShouldBeUnique
 
 
     public function __construct(
-        private readonly int $vkGroupId
+        private readonly int $groupId
     )
     {
         $this->onQueue('groups');
@@ -28,13 +28,13 @@ class ImportUsersFromGroup implements ShouldQueue, ShouldBeUnique
 
     public function handle(DiffGroupUsersHandler $statisticHandler): void
     {
-        $statisticHandler->handle($this->vkGroupId);
+        $statisticHandler->handle($this->groupId);
 
         $this->release(now()->addHours(self::RELEASE_AFTER_HOURS));
     }
 
     public function uniqueId(): int
     {
-        return $this->vkGroupId;
+        return $this->groupId;
     }
 }

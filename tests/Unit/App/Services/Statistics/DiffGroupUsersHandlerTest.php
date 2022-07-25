@@ -28,11 +28,11 @@ class DiffGroupUsersHandlerTest extends TestCase
     public function testHandle()
     {
         $groupId = 1;
-        Group::createByVkGroup($groupId);
+        $group = Group::createByVkGroup($groupId);
 
         // новые пользователи
         $statisticHandler = $this->makeStatisticHandler(range(1, 100));
-        $statisticHandler->handle($groupId);
+        $statisticHandler->handle($group->id);
 
         /** @var Group $group */
         $group = Group::findByVkGroupIdOrFail($groupId);
@@ -42,7 +42,7 @@ class DiffGroupUsersHandlerTest extends TestCase
 
         // часть пользователей отписалась, часть подписалась
         $statisticHandler = $this->makeStatisticHandler($newUserIds = range(50, 105));
-        $statisticHandler->handle($groupId);
+        $statisticHandler->handle($group->id);
 
         /** @var Group $group */
         $group = Group::findByVkGroupIdOrFail($groupId);

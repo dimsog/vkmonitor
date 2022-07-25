@@ -25,8 +25,10 @@ class GroupController extends Controller
     public function read(string $vkGroupId): array
     {
         $vkGroup = $this->groupInfoFetcher->getGroupInfoById($vkGroupId);
-        if (!Group::existsByVkGroupId($vkGroup->id)) {
-            ImportUsersFromGroup::dispatch($vkGroup->id);
+        $group = Group::findByVkGroup($vkGroup->id);
+        if (empty($group)) {
+            $group = Group::createByVkGroup($vkGroup->id);
+            ImportUsersFromGroup::dispatch($group->id);
             return [
                 'success' => true,
                 'data' => [
@@ -39,7 +41,7 @@ class GroupController extends Controller
             'success' => true,
             'data' => [
                 'status' => self::STATUS_EXISTS_GROUP,
-                'users' => GroupUserDiff::findDiffByGroupId($vkGroup->id)
+                'users' => $group->usersDiff()
             ]
         ];
     }
