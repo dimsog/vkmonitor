@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services\Vk;
 
+use App\Services\Vk\Dto\VkGroup;
 use VK\Client\VKApiClient;
 use VK\Exceptions\Api\VKApiParamGroupIdException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
-class UsersFetcher
+class GroupUsers
 {
     private const USERS_LIMIT = 1000;
 
 
     public function __construct(
         private readonly string $accessToken,
-        private readonly GroupInfoFetcher $groupInfoFetcher,
         private readonly VKApiClient $apiClient
     ) {}
 
@@ -27,23 +27,20 @@ class UsersFetcher
      * @throws VKApiException
      * @throws VKClientException
      */
-    public function fetch(int|string $groupId): array
+    public function fetch(VkGroup $groupInfo): array
     {
-        $groupInfo = $this->groupInfoFetcher->getGroupInfoById($groupId);
         $usersCount = $groupInfo->membersCount;
         $totalPages = $this->calculateTotalPages($usersCount);
-
         $result = [];
         for ($i = 0; $i < $totalPages; $i++) {
             $response = $this->apiClient->groups()->getMembers($this->accessToken, [
-                'group_id' => $groupId,
+                'group_id' => $groupInfo->id,
                 'sort' => 'id_asc',
                 'offset' => self::USERS_LIMIT * $i
             ]);
             $result = [...$result, ...$response['items']];
             sleep(1);
         }
-
         return $result;
     }
 

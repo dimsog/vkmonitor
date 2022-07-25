@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Services\Statistics\StatisticHandler;
+use App\Services\Statistics\DiffGroupUsersHandler;
 use App\Services\Vk\GroupInfoFetcher;
 use Illuminate\Console\Command;
 
@@ -15,7 +15,7 @@ class StatisticCommand extends Command
     protected $description = 'Демо-команда для управления статистикой';
 
 
-    public function handle(StatisticHandler $handler, GroupInfoFetcher $groupInfoFetcher): int
+    public function handle(DiffGroupUsersHandler $handler, GroupInfoFetcher $groupInfoFetcher): int
     {
         $groupId = $this->argument('groupId');
         $handler->handle($groupInfoFetcher->getGroupInfoById($groupId));
