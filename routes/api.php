@@ -15,4 +15,4 @@ use App\Http\Controllers\Api\GroupController;
 |
 */
 
-Route::get('/group/read/{link}', [GroupController::class, 'read']);
+Route::get('/group/read/{vkGroupId}', [GroupController::class, 'read']);

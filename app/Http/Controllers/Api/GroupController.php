@@ -7,10 +7,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Jobs\ImportUsersFromGroup;
 use App\Models\Group;
-use App\Models\GroupUser;
 use App\Models\GroupUserDiff;
 use App\Services\Vk\GroupInfoFetcher;
-use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
@@ -24,12 +22,11 @@ class GroupController extends Controller
     )
     {}
 
-    public function read(string $groupId): array
+    public function read(string $vkGroupId): array
     {
-        $groupInfo = $this->groupInfoFetcher->getGroupInfoById($groupId);
-        if (!Group::existsByVkGroupId($groupInfo->id)) {
-            ImportUsersFromGroup::dispatch($groupInfo->id);
-            var_dump(123);
+        $vkGroup = $this->groupInfoFetcher->getGroupInfoById($vkGroupId);
+        if (!Group::existsByVkGroupId($vkGroup->id)) {
+            ImportUsersFromGroup::dispatch($vkGroup->id);
             return [
                 'success' => true,
                 'data' => [
@@ -42,7 +39,7 @@ class GroupController extends Controller
             'success' => true,
             'data' => [
                 'status' => self::STATUS_EXISTS_GROUP,
-                'users' => GroupUserDiff::findDiffByGroupId($groupInfo->id)
+                'users' => GroupUserDiff::findDiffByGroupId($vkGroup->id)
             ]
         ];
     }
