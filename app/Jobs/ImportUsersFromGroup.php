@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\Statistics\StatisticHandler;
+use App\Services\Statistics\DiffGroupUsersHandler;
 use App\Services\Vk\GroupInfoFetcher;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -27,7 +27,7 @@ class ImportUsersFromGroup implements ShouldQueue, ShouldBeUnique
         $this->onQueue('groups');
     }
 
-    public function handle(StatisticHandler $statisticHandler, GroupInfoFetcher $groupInfoFetcher): void
+    public function handle(DiffGroupUsersHandler $statisticHandler, GroupInfoFetcher $groupInfoFetcher): void
     {
         $groupInfo = $groupInfoFetcher->getGroupInfoById($this->groupId);
         $statisticHandler->handle($groupInfo);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Vk\Dto;
 
-class GroupInfo
+class VkGroup
 {
     public function __construct(
         public readonly int $id,

@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Dto\VkUserDiffResponseItem;
+use App\Models\Dto\GroupUserDiffItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\VkUserDiff
  *
- * @method static \Illuminate\Database\Eloquent\Builder|VkUserDiff newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|VkUserDiff newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|VkUserDiff query()
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff query()
  * @mixin \Eloquent
  */
-class VkUserDiff extends Model
+class GroupUserDiff extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $table = 'group_users_diff';
+
+    public $incrementing = false;
+
 
     protected $casts = [
         'subscribe' => 'boolean'
@@ -38,7 +43,7 @@ class VkUserDiff extends Model
 
     /**
      * @param int $groupId
-     * @return VkUserDiffResponseItem[]
+     * @return GroupUserDiffItem[]
      * @throws \Exception
      */
     public static function findDiffByGroupId(int $groupId): array
@@ -54,9 +59,9 @@ class VkUserDiff extends Model
         $subscribedUsers = [];
         $unsubscribedUsers = [];
         foreach ($users as $user) {
-            /** @var VkUserDiff $user */
+            /** @var GroupUserDiff $user */
             if ($user->date != $currentDate) {
-                $result[] = new VkUserDiffResponseItem(
+                $result[] = new GroupUserDiffItem(
                     new \DateTimeImmutable($currentDate),
                     $subscribedUsers,
                     $unsubscribedUsers
@@ -73,7 +78,7 @@ class VkUserDiff extends Model
             }
         }
         if (!empty($subscribedUsers) || !empty($unsubscribedUsers)) {
-            $result[] = new VkUserDiffResponseItem(
+            $result[] = new GroupUserDiffItem(
                 new \DateTimeImmutable($currentDate),
                 $subscribedUsers,
                 $unsubscribedUsers
@@ -94,8 +99,9 @@ class VkUserDiff extends Model
         // смысл блока в том, что если пользователь подписался, а сейчас отписался,
         // сделаем так, чтобы этот пользователь не дублировался
         if ($user !== null) {
-            $user->subscribe = $subscribe;
+            $user->subscribed = $subscribe;
             $user->save();
+            return;
         }
 
         static::insert([

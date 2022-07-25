@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\Unit\App\Services\Vk;
 
-use App\Services\Vk\UsersFetcher;
+use App\Services\Vk\Dto\VkGroup;
+use App\Services\Vk\GroupInfoFetcher;
 use Mockery\MockInterface;
 use Tests\TestCase;
 use VK\Actions\Groups;
 use VK\Client\VKApiClient;
 
-class UsersFetcherTest extends TestCase
+class GroupUsersTest extends TestCase
 {
-    private UsersFetcher $usersFetcher;
+    private GroupInfoFetcher $groupInfoFetcher;
+
 
     public function setUp(): void
     {
@@ -25,25 +27,21 @@ class UsersFetcherTest extends TestCase
                         'count' => 2000,
                         'items' => range(1, 1000)
                     ]);
-
-                    $mock->shouldReceive('getById')->andReturn([
-                        [
-                            'id' => 1,
-                            'members_count' => 2000,
-                            'name' => 'ВКонтакте API',
-                            'screen_name' => 'apiclub',
-                            'photo_200' => '/path/to/photo'
-                        ]
-                    ]);
                 })
             );
         });
         $this->instance(VKApiClient::class, $mock);
-        $this->usersFetcher = $this->app->make(UsersFetcher::class);
+        $this->groupInfoFetcher = $this->app->make(GroupInfoFetcher::class);
     }
 
     public function testUsers()
     {
-        $this->assertEquals([...range(1, 1000), ...range(1, 1000)], $this->usersFetcher->fetch('apiclub'));
+        $groupInfo = new VkGroup(1, 'apiclub', 2000, 'apiclub', '/path/to/photo');
+        $this->assertEquals([
+            ...range(1, 1000),
+            ...range(1, 1000)
+            ],
+            $this->groupInfoFetcher->users($groupInfo)
+        );
     }
 }

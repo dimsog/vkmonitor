@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vk_users', function (Blueprint $table) {
-            $table->id();
-            $table->date('date');
-            $table->unsignedInteger('group_id')->index();
-            $table->unsignedInteger('user_id');
+        Schema::create('groups', function (Blueprint $table) {
+            $table->unsignedInteger('id')->autoIncrement();
+            $table->timestamps();
+            $table->unsignedInteger('vk_group_id')->index();
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vk_users');
+        Schema::dropIfExists('groups');
     }
 };

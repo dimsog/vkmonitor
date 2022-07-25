@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vk_user_diffs', function (Blueprint $table) {
-            $table->id();
-            $table->date('date');
+        Schema::create('group_users', function (Blueprint $table) {
+            $table->timestamps();
             $table->unsignedInteger('group_id');
             $table->unsignedInteger('user_id');
-            $table->tinyInteger('subscribed');
 
-            $table->index(['date', 'group_id']);
-            $table->index(['date', 'group_id', 'user_id', 'subscribed']);
+            $table
+                ->foreign('group_id')
+                ->references('id')
+                ->on('groups')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vk_user_diffs');
+        Schema::dropIfExists('group_users');
     }
 };
