@@ -41,7 +41,7 @@ class GroupController extends Controller
             'success' => true,
             'data' => [
                 'status' => self::STATUS_EXISTS_GROUP,
-                'users' => GroupUserDiff::findDiffByGroupId($vkGroup->id)
+                'users' => $group->usersDiff()
             ]
         ];
     }
