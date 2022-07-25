@@ -27,7 +27,8 @@ class GroupController extends Controller
         $vkGroup = $this->groupInfoFetcher->getGroupInfoById($vkGroupId);
         $group = Group::findByVkGroup($vkGroup->id);
         if (empty($group)) {
-            ImportUsersFromGroup::dispatch($vkGroup->id);
+            $group = Group::createByVkGroup($vkGroup->id);
+            ImportUsersFromGroup::dispatch($group->id);
             return [
                 'success' => true,
                 'data' => [
