@@ -14,11 +14,16 @@ class Group extends Model
     use HasFactory;
 
 
-    public static function findByVkGroupIdOrFail(int $vkGroupId): static
+    public static function findByVkGroup(int $vkGroupId): ?static
     {
-        $group = static::where([
+        return static::where([
             'vk_group_id' => $vkGroupId
         ])->first();
+    }
+
+    public static function findByVkGroupIdOrFail(int $vkGroupId): static
+    {
+        $group = static::findByVkGroup($vkGroupId);
         if (empty($group)) {
             throw new ModelNotFoundException();
         }
