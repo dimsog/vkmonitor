@@ -22,7 +22,7 @@ class DiffGroupUsersHandler
 
     public function handle(int $groupId): void
     {
-        $group = Group::findByVkGroupIdOrFail($groupId);
+        $group = Group::findOrFail($groupId);;
 
         // данные о группе из вк
         $groupInfo = $this->groupInfoFetcher->getGroupInfoById($group->vk_group_id);
