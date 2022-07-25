@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Services\Statistics\DiffGroupUsersHandler;
-use App\Services\Vk\GroupInfoFetcher;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,22 +20,21 @@ class ImportUsersFromGroup implements ShouldQueue, ShouldBeUnique
 
 
     public function __construct(
-        private readonly int $groupId
+        private readonly int $vkGroupId
     )
     {
         $this->onQueue('groups');
     }
 
-    public function handle(DiffGroupUsersHandler $statisticHandler, GroupInfoFetcher $groupInfoFetcher): void
+    public function handle(DiffGroupUsersHandler $statisticHandler): void
     {
-        $groupInfo = $groupInfoFetcher->getGroupInfoById($this->groupId);
-        $statisticHandler->handle($groupInfo);
+        $statisticHandler->handle($this->vkGroupId);
 
         $this->release(now()->addHours(self::RELEASE_AFTER_HOURS));
     }
 
     public function uniqueId(): int
     {
-        return $this->groupId;
+        return $this->vkGroupId;
     }
 }
