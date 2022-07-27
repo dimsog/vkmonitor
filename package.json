@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^3.0.1",
+        "bootstrap": "^5.2.0",
         "vue": "^3.2.37"
     }
 }
