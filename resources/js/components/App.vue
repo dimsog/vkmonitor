@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-form></v-form>
+        <v-form @send="onSendVkGroup"></v-form>
     </div>
 </template>
 
@@ -10,6 +10,18 @@ import VForm from "./VForm.vue";
 export default {
     components: {
         VForm
+    },
+
+    data() {
+        return {
+            vkGroupId: null
+        }
+    },
+
+    methods: {
+        onSendVkGroup(vkGroupId) {
+
+        }
     }
 }
 </script>
