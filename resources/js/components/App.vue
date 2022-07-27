@@ -1,11 +1,15 @@
 <template>
     <div>
-        Init component
+        <v-form></v-form>
     </div>
 </template>
 
 <script>
-export default {
+import VForm from "./VForm.vue";
 
+export default {
+    components: {
+        VForm
+    }
 }
 </script>
