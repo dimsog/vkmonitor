@@ -6,6 +6,7 @@
 
 <script>
 import VForm from "./VForm.vue";
+import VkGroupFetcher from "../api/VkGroupFetcher";
 
 export default {
     components: {
@@ -19,8 +20,9 @@ export default {
     },
 
     methods: {
-        onSendVkGroup(vkGroupId) {
-
+        async onSendVkGroup(vkGroupId) {
+            const response = await VkGroupFetcher.send(vkGroupId);
+            console.log(response);
         }
     }
 }
