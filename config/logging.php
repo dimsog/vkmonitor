@@ -51,6 +51,14 @@ return [
     */
 
     'channels' => [
+        'telegram-info' => [
+            'driver' => 'custom',
+            'via'    => Logger\TelegramLogger::class,
+            'chat_id' => env('TELEGRAM_LOG_CHAT_ID'),
+            'token' => env('TELEGRAM_LOG_BOT_TOKEN'),
+            'level' => 'info'
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
