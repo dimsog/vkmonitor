@@ -33,11 +33,15 @@ class GroupUser extends Model
 
     public static function addUsers(int $groupId, array $users): void
     {
-        foreach ($users as $userId) {
-            static::insert([
-                'group_id'  => $groupId,
-                'user_id'   => $userId
-            ]);
+        foreach (collect($users)->chunk(1000) as $userIds) {
+            $batchedUsers = [];
+            foreach ($userIds as $userId) {
+                $batchedUsers[] = [
+                    'group_id' => $groupId,
+                    'user_id' => $userId
+                ];
+            }
+            static::insert($batchedUsers);
         }
     }
 

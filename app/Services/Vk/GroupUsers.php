@@ -34,7 +34,7 @@ class GroupUsers
         $result = [];
         for ($i = 0; $i < $totalPages; $i++) {
             $result = [...$result, ...$this->fetchUsers($groupInfo->id, $i)];
-            if ($i % 4 == 0) {
+            if ($i % 3 == 0) {
                 sleep(1);
             }
         }
