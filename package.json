@@ -10,5 +10,11 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "@vitejs/plugin-vue": "^3.0.1",
+        "bootstrap": "^5.2.0",
+        "sass": "^1.54.0",
+        "vue": "^3.2.37"
     }
 }
