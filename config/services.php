@@ -34,5 +34,11 @@ return [
     'vk' => [
         'client_id' => (int) env('VK_API_CLIENT_ID', 0),
         'access_token' => env('VK_API_ACCESS_TOKEN')
+    ],
+
+    'vkontakte' => [
+        'client_id' => env('VK_AUTH_CLIENT_ID'),
+        'client_secret' => env('VK_AUTH_CLIENT_SECRET'),
+        'redirect' => env('VK_AUTH_REDIRECT_URI')
     ]
 ];

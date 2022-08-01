@@ -33,13 +33,10 @@ class GroupUsers
         $totalPages = $this->calculateTotalPages($usersCount);
         $result = [];
         for ($i = 0; $i < $totalPages; $i++) {
-            $response = $this->apiClient->groups()->getMembers($this->accessToken, [
-                'group_id' => $groupInfo->id,
-                'sort' => 'id_asc',
-                'offset' => self::USERS_LIMIT * $i
-            ]);
-            $result = [...$result, ...$response['items']];
-            sleep(1);
+            $result = [...$result, ...$this->fetchUsers($groupInfo->id, $i)];
+            if ($i % 3 == 0) {
+                sleep(1);
+            }
         }
         return $result;
     }
@@ -47,5 +44,15 @@ class GroupUsers
     private function calculateTotalPages(int $usersCount): int
     {
         return (int) ceil($usersCount / self::USERS_LIMIT);
+    }
+
+    private function fetchUsers(int $vkGroupId, int $page)
+    {
+        $response = $this->apiClient->groups()->getMembers($this->accessToken, [
+            'group_id' => $vkGroupId,
+            'sort' => 'id_asc',
+            'offset' => self::USERS_LIMIT * $page
+        ]);
+        return $response['items'];
     }
 }
