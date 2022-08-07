@@ -4,18 +4,4 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    .guest__auth-link {
-        display: inline-block;
-        outline: none;
-        text-decoration: none;
-        color: #fff;
-        background: #0077ff;
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-size: 14px;
-        &:active {
-            padding-top: 9px;
-            padding-bottom: 7px;
-        }
-    }
 }
