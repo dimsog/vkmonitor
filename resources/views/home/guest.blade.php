@@ -3,7 +3,7 @@
     <section class="guest">
         <div class="guest-wrapper">
             <h2>Войдите, чтобы начать пользоваться системой</h2>
-            <a href="{{ route('auth.redirect') }}" class="guest__auth-link">
+            <a href="{{ route('auth.redirect') }}" class="btn btn-vk">
                 Войти через VK
             </a>
         </div>
