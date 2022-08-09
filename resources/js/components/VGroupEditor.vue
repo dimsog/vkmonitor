@@ -99,7 +99,7 @@ export default {
         },
 
         onNextStepToVkCredentials() {
-            if (this.group_link === null || this.group_link.length === 0) {
+            if (this.model.group_link === null || this.model.group_link.length === 0) {
                 return alert('Укажите ссылку на группу');
             }
             this.step = 2;
