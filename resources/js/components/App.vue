@@ -1,28 +1,27 @@
 <template>
     <div>
-        <v-form @send="onSendVkGroup"></v-form>
+        <button class="btn btn-vk" @click.prevent="onShowAddGroupModal">Добавить группу</button>
+        <v-group-editor ref="groupEditor"></v-group-editor>
     </div>
 </template>
 
 <script>
-import VForm from "./VForm.vue";
-import VkGroupFetcher from "../api/VkGroupFetcher";
+import VGroupEditor from "./VGroupEditor.vue";
 
 export default {
     components: {
-        VForm
+        VGroupEditor
     },
 
     data() {
         return {
-            vkGroupId: null
+            vkGroupId: null,
         }
     },
 
     methods: {
-        async onSendVkGroup(vkGroupId) {
-            const response = await VkGroupFetcher.send(vkGroupId);
-            console.log(response);
+        onShowAddGroupModal() {
+            this.$refs.groupEditor.show();
         }
     }
 }
