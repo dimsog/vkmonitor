@@ -6,7 +6,6 @@ namespace App\Providers;
 
 use App\Services\Vk\GroupInfoFetcher;
 use App\Services\Vk\GroupUsers;
-use App\Services\Vk\Utils\GenerateVkAccessTokenLink;
 use Illuminate\Support\ServiceProvider;
 use VK\Client\VKApiClient;
 use VK\OAuth\VKOAuth;
@@ -15,10 +14,6 @@ class VkServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(GenerateVkAccessTokenLink::class, function () {
-            return new GenerateVkAccessTokenLink(config('services.vk.client_id'), new VKOAuth());
-        });
-
         $this->app->bind(GroupUsers::class, function () {
             return new GroupUsers(
                 config('services.vk.access_token'),
