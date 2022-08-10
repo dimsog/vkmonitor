@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,4 @@ use App\Http\Controllers\Api\GroupController;
 */
 
 Route::get('/group/read/{vkGroupId}', [GroupController::class, 'read']);
+Route::post('/access-token/check', [AccessTokenController::class, 'read']);

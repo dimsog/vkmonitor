@@ -23,12 +23,12 @@
                                 </div>
                             </div>
                             <div v-if="step === 2">
-                                <div class="alert alert-info">
-                                    Эти данные нужны для получения <strong>access token</strong>
-                                </div>
                                 <div class="mb-4">
                                     <label>Идентификатор приложения:</label>
                                     <input type="text" v-model="model.vk_client_id" class="form-control">
+                                    <div class="alert alert-info mt-4">
+                                        Эти данные нужны для получения <strong>access token</strong>
+                                    </div>
                                     <div>
                                         Вам нужно указать идентификатор вашего standalone-приложения.<br>
                                         Посмотреть мои приложения и создать новые вы можете на странице
@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-vk">
+                                    <button type="button" @click.prevent="onNextStepToAccessTokenInfo" class="btn btn-vk">
                                         Дальше
                                     </button>
                                 </div>
@@ -50,7 +50,7 @@
                                     получения access_token, пожалуйста, введите его в поле на следующем шаге.
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-vk">
+                                    <button type="button" @click.prevent="onNextStepGetAccessToken" class="btn btn-vk">
                                         Получить access_token
                                     </button>
                                 </div>
@@ -76,6 +76,7 @@
 
 <script>
 import { Modal } from 'bootstrap';
+import AccessTokenService from "../api/AccessTokenService";
 
 export default {
     data() {
@@ -102,6 +103,22 @@ export default {
                 return alert('Укажите ссылку на группу');
             }
             this.step = 2;
+        },
+
+        onNextStepToAccessTokenInfo() {
+            this.step = 3;
+        },
+
+        onNextStepGetAccessToken() {
+            this.step = 4;
+            window.open(`https://oauth.vk.com/authorize?client_id=${this.model.vk_client_id}&redirect_uri=https%3A%2F%2Foauth.vk.com%2Fblank.html&display=page&scope=327680&response_type=token&v=5.101`);
+        },
+
+        async onNextStepCheckAccessToken() {
+            this.step = 5;
+            const result = await AccessTokenService
+                .check(this.model.vk_access_token)
+
         },
 
         _resetModel() {
