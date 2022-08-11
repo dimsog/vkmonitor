@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default class {
     static async check(token) {
-        const response = await axios.post('/access-token/check', {
+        const response = await axios.post('/api/access-token/check', {
             token
         });
         if (response.data.success === false) {
