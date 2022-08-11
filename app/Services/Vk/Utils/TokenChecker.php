@@ -18,7 +18,6 @@ class TokenChecker
             $response = $this->vkApiClient->groups()->getById($token, [
                 'group_id' => 'apiclub'
             ]);
-            var_dump($response);
             return true;
     }
 }
