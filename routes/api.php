@@ -17,4 +17,4 @@ use App\Http\Controllers\Api\AccessTokenController;
 */
 
 Route::get('/group/read/{vkGroupId}', [GroupController::class, 'read']);
-Route::post('/access-token/check', [AccessTokenController::class, 'read']);
+Route::post('/access-token/check', [AccessTokenController::class, 'check']);
