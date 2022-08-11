@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Vk\Utils;
 
 use VK\Client\VKApiClient;
+use VK\Exceptions\VKApiException;
 
 class TokenChecker
 {
@@ -15,9 +16,13 @@ class TokenChecker
 
     public function check(string $token): bool
     {
-            $response = $this->vkApiClient->groups()->getById($token, [
+        try {
+            $this->vkApiClient->groups()->getById($token, [
                 'group_id' => 'apiclub'
             ]);
             return true;
+        } catch (VKApiException) {
+            return false;
+        }
     }
 }
