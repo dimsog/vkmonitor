@@ -5,44 +5,53 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\ImportUsersFromGroup;
-use App\Models\Group;
-use App\Models\GroupUserDiff;
+use App\Http\Requests\AddGroupRequest;
+use App\Services\Groups\AddGroupService;
 use App\Services\Vk\GroupInfoFetcher;
+use VK\Exceptions\VKApiException;
+use VK\Exceptions\VKClientException;
 
 class GroupController extends Controller
 {
-    public final const STATUS_NEW_GROUP = 1;
-
-    public final const STATUS_EXISTS_GROUP = 2;
-
-
     public function __construct(
         private readonly GroupInfoFetcher $groupInfoFetcher,
     )
     {}
 
+    public function create(AddGroupRequest $request, AddGroupService $addGroupService): array
+    {
+        $data = $request->validated();
+        $addGroupService->add(
+            auth()->id(),
+            (int) $data['vk_group_id'],
+            (int) $data['vk_client_id'],
+            $data['vk_access_token']
+        );
+        return [
+            'success' => true
+        ];
+    }
+
     public function read(string $vkGroupId): array
     {
-        $vkGroup = $this->groupInfoFetcher->getGroupInfoById($vkGroupId);
-        $group = Group::findByVkGroup($vkGroup->id);
-        if (empty($group)) {
-            $group = Group::createByVkGroup($vkGroup->id);
-            ImportUsersFromGroup::dispatch($group->id);
+        try {
+            $vkGroup = $this->groupInfoFetcher->getGroupInfoById($vkGroupId);
             return [
                 'success' => true,
                 'data' => [
-                    'status' => self::STATUS_NEW_GROUP,
-                    'users' => []
+                    'group' => $vkGroup
                 ]
             ];
+        } catch (VKApiException) {
+            return [
+                'success' => false,
+                'text' => 'Группа не найдена.'
+            ];
+        } catch (VKClientException) {
+            return [
+                'success' => false,
+                'text' => 'При запросе произошла ошибка. Попробуйте позже.'
+            ];
         }
-        return [
-            'success' => true,
-            'data' => [
-                'status' => self::STATUS_EXISTS_GROUP,
-                'users' => $group->usersDiff()
-            ]
-        ];
     }
 }

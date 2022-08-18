@@ -20,6 +20,12 @@ class GroupInfoFetcher
         $this->groupUsers = new GroupUsers($this->accessToken, $this->vkApiClient);
     }
 
+    /**
+     * @param int|string $groupId
+     * @return VkGroup
+     * @throws \VK\Exceptions\VKApiException
+     * @throws \VK\Exceptions\VKClientException
+     */
     public function getGroupInfoById(int|string $groupId): VkGroup
     {
         $response = $this->vkApiClient->groups()->getById($this->accessToken, [

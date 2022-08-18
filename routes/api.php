@@ -1,10 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\GroupController;
-use App\Http\Controllers\Api\AccessTokenController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,5 +10,3 @@ use App\Http\Controllers\Api\AccessTokenController;
 |
 */
 
-Route::get('/group/read/{vkGroupId}', [GroupController::class, 'read']);
-Route::post('/access-token/check', [AccessTokenController::class, 'check']);

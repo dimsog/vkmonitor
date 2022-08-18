@@ -14,7 +14,7 @@
                             <div v-if="step === 1">
                                 <div class="mb-4">
                                     <label>Ссылка на группу:</label>
-                                    <input type="text" v-model="model.group_link" class="form-control">
+                                    <input type="text" v-model="model.vk_group_link" class="form-control">
                                 </div>
                                 <div class="mb-4">
                                     <button type="button" @click.prevent="onNextStepToVkCredentials" class="btn btn-vk">
@@ -56,16 +56,23 @@
                                 </div>
                             </div>
                             <div v-if="step === 4">
-                            <div class="mb-4">
-                                <label>Access token:</label>
-                                <input type="text" v-model="model.vk_access_token" class="form-control">
+                                <div class="mb-4">
+                                    <label>Access token:</label>
+                                    <input type="text" v-model="model.vk_access_token" class="form-control">
+                                </div>
+                                <div>
+                                    <button type="button" @click.prevent="onNextStepCheckAccessToken" class="btn btn-vk">
+                                        Проверить
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button type="button" class="btn btn-vk">
-                                    Проверить
-                                </button>
+                            <div v-if="step === 5">
+                                <div>
+                                    <button type="button" @click.prevent="onAddGroup" class="btn btn-vk">
+                                        Добавить группу
+                                    </button>
+                                </div>
                             </div>
-                        </div>
                         </template>
                     </div>
                 </div>
@@ -77,13 +84,16 @@
 <script>
 import { Modal } from 'bootstrap';
 import AccessTokenService from "../api/AccessTokenService";
+import VkGroupFetcher from "../api/VkGroupFetcher";
+import GroupService from "../api/GroupService";
 
 export default {
     data() {
         return {
             modal: null,
             step: 1,
-            model: null
+            model: null,
+            vkGroup: null
         }
     },
 
@@ -98,11 +108,17 @@ export default {
             this.modal.show();
         },
 
-        onNextStepToVkCredentials() {
-            if (this.model.group_link === null || this.model.group_link.length === 0) {
+        async onNextStepToVkCredentials() {
+            if (this.model.vk_group_link === null || this.model.vk_group_link.length === 0) {
                 return alert('Укажите ссылку на группу');
             }
-            this.step = 2;
+            // проверка, что такая группа существует
+            try {
+                this.vkGroup = await VkGroupFetcher.fetch(this.model.vk_group_link);
+                this.step = 2;
+            } catch(e) {
+                return alert(e.message);
+            }
         },
 
         onNextStepToAccessTokenInfo() {
@@ -114,18 +130,30 @@ export default {
             window.open(`https://oauth.vk.com/authorize?client_id=${this.model.vk_client_id}&redirect_uri=https%3A%2F%2Foauth.vk.com%2Fblank.html&display=page&scope=327680&response_type=token&v=5.101`);
         },
 
-        async onNextStepCheckAccessToken() {
-            this.step = 5;
-            const result = await AccessTokenService
-                .check(this.model.vk_access_token)
+        async onAddGroup() {
+            const response = await GroupService.add(
+                this.vkGroup.id,
+                this.model.vk_client_id,
+                this.model.vk_access_token
+            );
+            if (response.success) {
+                // @todo
+            }
+        },
 
+        async onNextStepCheckAccessToken() {
+            const result = await AccessTokenService.check(this.model.vk_access_token);
+            if (!result) {
+                return alert('Токен не работает');
+            }
+            this.step = 5;
         },
 
         _resetModel() {
             this.model = {
-                group_link: null,
+                vk_group_link: null,
+                vk_group_id: null,
                 vk_client_id: null,
-                vk_client_secret: null,
                 vk_access_token: null
             };
             this.step = 1;
