@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a v-for="group in groups" :key="group.id" href="#">
+        <a v-for="group in groups" :key="group.id" @click.prevent="onSelectGroup(group)" href="#">
             {{ group.vkGroup.name }}
         </a>
     </div>
@@ -12,6 +12,13 @@ export default {
         groups: {
             type: Array,
             required: true
+        }
+    },
+    emits: ['select'],
+
+    methods: {
+        onSelectGroup(group) {
+            this.$emit('select', group);
         }
     }
 }
