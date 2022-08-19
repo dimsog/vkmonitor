@@ -16,9 +16,10 @@ class GroupUsers
 
 
     public function __construct(
-        private readonly string $accessToken,
-        private readonly VKApiClient $apiClient
-    ) {}
+        private readonly VKApiClient $apiClient,
+        private readonly string $accessToken
+    ) {
+    }
 
     /**
      * @param int|string $groupId

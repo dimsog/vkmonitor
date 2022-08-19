@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class Telemetry
 {
-    public static function info(string $message): void
-    {
-        Log::channel('telegram-info')->info($message);
-    }
-
     public static function error(string $message): void
     {
         Log::channel('telegram-info')->error($message);

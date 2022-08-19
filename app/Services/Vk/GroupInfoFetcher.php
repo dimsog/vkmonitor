@@ -15,10 +15,10 @@ class GroupInfoFetcher
 
 
     public function __construct(
+        private readonly VKApiClient $apiClient,
         private readonly string $accessToken,
-        private readonly VKApiClient $vkApiClient,
     ) {
-        $this->groupUsers = new GroupUsers($this->accessToken, $this->vkApiClient);
+        $this->groupUsers = new GroupUsers($this->apiClient, $this->accessToken);
     }
 
     /**
@@ -29,7 +29,7 @@ class GroupInfoFetcher
      */
     public function getGroupInfoById(int|string $groupId): VkGroup
     {
-        $response = $this->vkApiClient->groups()->getById($this->accessToken, [
+        $response = $this->apiClient->groups()->getById($this->accessToken, [
             'group_id' => $groupId,
             'fields' => 'members_count'
         ]);
@@ -47,7 +47,7 @@ class GroupInfoFetcher
 
     public function getGroupInfoByIds(array $groupIds): Collection
     {
-        $response = $this->vkApiClient->groups()->getById($this->accessToken, [
+        $response = $this->apiClient->groups()->getById($this->accessToken, [
             'group_ids' => $groupIds,
             'fields' => 'members_count'
         ]);

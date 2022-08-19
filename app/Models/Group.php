@@ -44,6 +44,11 @@ class Group extends Model
             ->get();
     }
 
+    public static function findAllGroups(): Collection
+    {
+        return static::all();
+    }
+
     public static function createByVkGroup(int $vkGroupId): static
     {
         $model = new static();

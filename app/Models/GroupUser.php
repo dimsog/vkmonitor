@@ -24,6 +24,8 @@ class GroupUser extends Model
 
     public $incrementing = false;
 
+    public $timestamps = true;
+
 
     public static function deleteUsersByGroup(int $groupId): int
     {
@@ -37,6 +39,7 @@ class GroupUser extends Model
             $batchedUsers = [];
             foreach ($userIds as $userId) {
                 $batchedUsers[] = [
+                    'created_at' => now(),
                     'group_id' => $groupId,
                     'user_id' => $userId
                 ];
