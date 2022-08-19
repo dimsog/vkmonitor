@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Vk;
 
 use App\Services\Vk\Dto\VkGroup;
+use Illuminate\Support\Collection;
 use RuntimeException;
 use VK\Client\VKApiClient;
 
@@ -42,6 +43,23 @@ class GroupInfoFetcher
             $response[0]['screen_name'],
             $response[0]['photo_200']
         );
+    }
+
+    public function getGroupInfoByIds(array $groupIds): Collection
+    {
+        $response = $this->vkApiClient->groups()->getById($this->accessToken, [
+            'group_ids' => $groupIds,
+            'fields' => 'members_count'
+        ]);
+        return collect(array_map(static function ($item) {
+            return new VkGroup(
+                $item['id'],
+                $item['name'],
+                $item['members_count'],
+                $item['screen_name'],
+                $item['photo_200']
+            );
+        }, $response));
     }
 
     public function users(VkGroup $groupInfo): array

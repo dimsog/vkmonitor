@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,6 +35,13 @@ class Group extends Model
     {
         return static::where('vk_group_id', $vkGroupId)
             ->exists();
+    }
+
+    public static function findGroupsByUser(int $userId): Collection
+    {
+        return static::where('user_id', $userId)
+            ->orderByDesc('id')
+            ->get();
     }
 
     public static function createByVkGroup(int $vkGroupId): static
