@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\AccessTokenController;
 use App\Http\Controllers\Api\GroupsController;
+use App\Http\Controllers\Api\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,5 @@ Route::middleware('auth')->group(static function () {
     Route::get('/api/group/read/{vkGroupId}', [GroupController::class, 'read']);
     Route::post('/api/access-token/check', [AccessTokenController::class, 'check']);
     Route::get('/api/groups', [GroupsController::class, 'index']);
+    Route::get('/api/users/{groupId}/{page?}', [UsersController::class, 'index']);
 });
