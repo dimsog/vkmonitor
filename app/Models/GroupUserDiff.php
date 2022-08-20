@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use DateTimeInterface;
 use App\Models\Dto\GroupUserDiffItem;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -110,5 +112,14 @@ class GroupUserDiff extends Model
             'user_id'   => $userId,
             'subscribed' => $subscribe
         ]);
+    }
+
+    public static function findAllBetweenDates(int $groupId, DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    {
+        return static::where('group_id', $groupId)
+            ->where('date', '>=', $startDate)
+            ->where('date', '<=', $endDate)
+            ->orderByDesc('date')
+            ->get();
     }
 }
