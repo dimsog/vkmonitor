@@ -30,7 +30,8 @@ class GroupUserDiff extends Model
 
 
     protected $casts = [
-        'subscribed' => 'boolean'
+        'subscribed' => 'boolean',
+        'date' => 'date'
     ];
 
     public static function addSubscribed(int $groupId, int $userId): void
