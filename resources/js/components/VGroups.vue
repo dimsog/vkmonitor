@@ -1,6 +1,12 @@
 <template>
-    <div>
-        <a v-for="group in groups" :key="group.id" @click.prevent="onSelectGroup(group)" href="#">
+    <div class="groups">
+        <a
+            v-for="group in groups"
+            :key="group.id"
+            @click.prevent="onSelectGroup(group)"
+            href="#"
+            class="group-item"
+        >
             {{ group.vkGroup.name }}
         </a>
     </div>
