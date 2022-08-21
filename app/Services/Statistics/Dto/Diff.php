@@ -27,7 +27,12 @@ class Diff
 
     public function getWeekName(): string
     {
-        return WeekNames::getNameByWeekId($this->date->format('N'));
+        return WeekNames::getNameByWeekId($this->getWeekNumber());
+    }
+
+    public function getWeekNumber(): int
+    {
+        return (int) $this->date->format('N');
     }
 
     public function toArray(): array
@@ -35,7 +40,7 @@ class Diff
         return [
             'date' => $this->date->format('Y-m-d'),
             'weekName' => $this->getWeekName(),
-            'weekNumber' => $this->date->format('N'),
+            'weekNumber' => $this->getWeekNumber(),
             'users' => $this->users
         ];
     }
