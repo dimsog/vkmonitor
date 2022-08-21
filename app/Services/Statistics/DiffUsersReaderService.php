@@ -6,6 +6,7 @@ namespace App\Services\Statistics;
 
 use App\Models\Group;
 use App\Models\GroupUserDiff;
+use App\Services\Statistics\Dto\Diff;
 use App\Services\Statistics\Dto\User;
 use App\Services\Vk\UsersFetcher;
 use Illuminate\Support\Collection;
@@ -29,11 +30,17 @@ class DiffUsersReaderService
         $vkUsers = $this->usersFetcher->fetchAllByIds($users->pluck('user_id'), $group->vk_access_token);
 
         $result = [];
-        foreach ($users as $user) {
-            $vkUser = $vkUsers->where('id', $user->user_id)->first();
-            if (!empty($vkUser)) {
-                $result[] = new User($vkUser, $user->subscribed);
+        for ($i = self::LIMIT - 1; $i >= 0; $i--) {
+            $diff = new Diff(new \DateTimeImmutable($startDate->clone()->addDays($i)->format('Y-m-d')));
+            foreach ($users as $user) {
+                if ($user->date == $diff->date) {
+                    $vkUser = $vkUsers->where('id', $user->user_id)->first();
+                    if (!empty($vkUser)) {
+                        $diff->addUser(new User($vkUser, $user->subscribed));
+                    }
+                }
             }
+            $result[] = $diff;
         }
         return collect($result);
     }
