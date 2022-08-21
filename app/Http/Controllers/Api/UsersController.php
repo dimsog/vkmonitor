@@ -20,7 +20,7 @@ class UsersController extends Controller
         return [
             'success' => true,
             'data' => [
-                'users' => $diffUsersReaderService->read($group, $page)
+                'diff' => $diffUsersReaderService->read($group, $page)
             ]
         ];
     }
