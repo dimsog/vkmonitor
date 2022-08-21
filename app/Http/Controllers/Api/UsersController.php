@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Services\Statistics\DiffUsersReaderService;
+use App\Services\Statistics\Dto\Diff;
 
 class UsersController extends Controller
 {
@@ -20,7 +21,7 @@ class UsersController extends Controller
         return [
             'success' => true,
             'data' => [
-                'diff' => $diffUsersReaderService->read($group, $page)
+                'diff' => $diffUsersReaderService->read($group, $page)->map(fn (Diff $diff) => $diff->toArray())
             ]
         ];
     }
