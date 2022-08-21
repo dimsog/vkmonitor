@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Statistics\Dto;
 
+use App\Services\Calendar\WeekNames;
 use DateTimeInterface;
 
 class Diff
@@ -22,5 +23,20 @@ class Diff
     {
         $this->users[] = $user;
         return $this;
+    }
+
+    public function getWeekName(): string
+    {
+        return WeekNames::getNameByWeekId($this->date->format('N'));
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'date' => $this->date->format('Y-m-d'),
+            'weekName' => $this->getWeekName(),
+            'weekNumber' => $this->date->format('N'),
+            'users' => $this->users
+        ];
     }
 }
