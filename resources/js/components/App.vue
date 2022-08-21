@@ -1,12 +1,30 @@
 <template>
-    <div>
-        <button class="btn btn-vk" @click.prevent="onShowAddGroupModal">Добавить группу</button>
-        <v-group-editor ref="groupEditor"></v-group-editor>
+    <div class="app">
+        <div class="sidebar">
+            <button class="btn btn-vk" @click.prevent="onShowAddGroupModal">Добавить группу</button>
+            <v-groups :groups="groups" @select="onSelectGroup"></v-groups>
+        </div>
 
-        <v-groups :groups="groups" @select="onSelectGroup"></v-groups>
-        <v-diff-users v-if="activeGroup != null" :group="activeGroup"></v-diff-users>
+        <div class="users">
+            <v-diff-users v-if="activeGroup != null" :group="activeGroup"></v-diff-users>
+        </div>
+
+        <v-group-editor ref="groupEditor"></v-group-editor>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.app {
+    display: flex;
+    .sidebar {
+        width: 400px;
+        flex-grow: 1;
+    }
+    .users {
+        width: 100%;
+    }
+}
+</style>
 
 <script>
 import VGroupEditor from "./VGroupEditor.vue";
