@@ -121,6 +121,7 @@ class GroupUserDiff extends Model
             ->where('date', '>=', $startDate)
             ->where('date', '<=', $endDate)
             ->orderByDesc('date')
+            ->orderByDesc('subscribed')
             ->get();
     }
 }
