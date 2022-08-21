@@ -19,9 +19,11 @@
     .sidebar {
         width: 400px;
         flex-grow: 1;
+        padding: 1rem;
     }
     .users {
         width: 100%;
+        padding: 1rem 0 1rem 1rem;
     }
 }
 </style>
