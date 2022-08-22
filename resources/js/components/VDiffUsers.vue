@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ group.vkGroup.name }}
+        <h1>{{ group.vkGroup.name }}</h1>
 
         <div>
             <div v-for="diff in diffItems">
