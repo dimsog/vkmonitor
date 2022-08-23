@@ -32,6 +32,7 @@
     .diff-item {
         .diff-item__users {
             display: flex;
+            flex-wrap: wrap;
             .diff-item-user {
                 display: block;
                 width: 80px;
