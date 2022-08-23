@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 
 class Group extends Model
 {
@@ -100,10 +101,13 @@ class Group extends Model
 
     public function userIds(): array
     {
-        return $this
-            ->users
-            ->pluck('user_id')
-            ->toArray();
+        return array_column(\DB::select('
+            SELECT user_id
+            FROM group_users
+            WHERE group_id = :group_id
+        ', [
+            ':group_id' => $this->id
+        ]), 'user_id');
     }
 
     public function usersDiff(): array
