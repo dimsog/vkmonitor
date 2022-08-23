@@ -10,8 +10,9 @@ class VkUser
         public readonly int $id,
         public readonly string $firstName,
         public readonly string $lastName,
-        public readonly string $screenName,
-        public readonly string $photo200
+        public readonly ?string $screenName,
+        public readonly string $photo200,
+        public readonly bool $deactivated = false
     )
     {}
 }

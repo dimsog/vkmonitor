@@ -33,8 +33,9 @@ class UsersFetcher
                     $rawUser['id'],
                     $rawUser['first_name'],
                     $rawUser['last_name'],
-                    $rawUser['screen_name'],
+                    $rawUser['screen_name'] ?? null,
                     $rawUser['photo_200'],
+                    empty($rawUser['deactivated'])
                 );
             }
         }
