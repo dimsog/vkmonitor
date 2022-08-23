@@ -11,7 +11,7 @@
                     <a v-for="user in diff.users"
                        class="diff-item-user"
                        :class="{'diff-item-user--subscribed': user.subscribed}"
-                       :href="'https://vk.com/' + user.vkUser.screenName"
+                       :href="getVkUserLink(user.vkUser)"
                        target="_blank"
                     >
                         <div class="diff-item-user__avatar">
@@ -86,6 +86,13 @@ export default {
     methods: {
         async fetchDiffItems() {
             this.diffItems = await DiffUsersReaderService.fetch(this.group.id);
+        },
+
+        getVkUserLink(vkUser) {
+            if (vkUser.deactivated) {
+                return '#';
+            }
+            return 'https://vk.com/' + vkUser.screenName;
         }
     },
 
