@@ -1,29 +1,37 @@
 <template>
     <div class="app">
-        <div class="sidebar">
+        <div class="header">
             <button class="btn btn-vk" @click.prevent="onShowAddGroupModal">Добавить группу</button>
-            <v-groups :groups="groups" @select="onSelectGroup"></v-groups>
         </div>
+        <div class="content">
+            <div class="sidebar">
+                <v-groups :groups="groups" @select="onSelectGroup"></v-groups>
+            </div>
 
-        <div class="users">
-            <v-diff-users v-if="activeGroup != null" :group="activeGroup"></v-diff-users>
+            <div class="users">
+                <v-diff-users v-if="activeGroup != null" :group="activeGroup"></v-diff-users>
+            </div>
+
+            <v-group-editor ref="groupEditor"></v-group-editor>
         </div>
-
-        <v-group-editor ref="groupEditor"></v-group-editor>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .app {
-    display: flex;
-    .sidebar {
-        width: 400px;
-        flex-grow: 1;
-        padding: 1rem;
-    }
-    .users {
-        width: 100%;
-        padding: 1rem 0 1rem 1rem;
+    .content {
+        display: flex;
+
+        .sidebar {
+            width: 400px;
+            flex-grow: 1;
+            padding: 1rem;
+        }
+
+        .users {
+            width: 100%;
+            padding: 1rem 0 1rem 1rem;
+        }
     }
 }
 </style>
