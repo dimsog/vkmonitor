@@ -1,7 +1,9 @@
 <template>
     <div class="app">
         <div class="header">
-            <button class="btn btn-vk" @click.prevent="onShowAddGroupModal">Добавить группу</button>
+            <div>
+                <button class="btn btn-vk" @click.prevent="onShowAddGroupModal">Добавить группу</button>
+            </div>
         </div>
         <div class="content">
             <div class="sidebar">
@@ -19,6 +21,10 @@
 
 <style lang="scss" scoped>
 .app {
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
     .content {
         display: flex;
 
