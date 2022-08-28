@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="modal fade" ref="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered" :class="{'modal-lg': size === 'lg' }">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
@@ -29,6 +29,10 @@ export default {
         show: {
             type: Boolean,
             default: false
+        },
+        size: {
+            type: String,
+            default: 'default'
         }
     },
     data() {
