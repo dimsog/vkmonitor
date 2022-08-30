@@ -17,7 +17,11 @@ class GroupsReaderService
     public function read(int $userId): array
     {
         $groups = Group::findGroupsByUser($userId);
-        $vkGroups = $this->groupInfoFetcher->getGroupInfoByIds($groups->pluck('vk_group_id')->toArray());
+        $groupIds = $groups->pluck('vk_group_id')->toArray();
+        if (empty($groupIds)) {
+            return [];
+        }
+        $vkGroups = $this->groupInfoFetcher->getGroupInfoByIds($groupIds);
         $result = [];
         foreach ($groups as $group) {
             $result[] = new GroupDto(
