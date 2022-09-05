@@ -17,6 +17,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property \Illuminate\Support\Carbon $date
+ * @property int $group_id
+ * @property int $user_id
+ * @property bool $subscribed
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereSubscribed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereUserId($value)
  */
 class GroupUserDiff extends Model
 {

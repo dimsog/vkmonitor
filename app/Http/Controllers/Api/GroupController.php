@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddGroupRequest;
 use App\Services\Groups\AddGroupService;
 use App\Services\Vk\GroupInfoFetcher;
+use VK\Exceptions\Api\VKApiAuthException;
 use VK\Exceptions\VKApiException;
 use VK\Exceptions\VKClientException;
 
@@ -20,16 +21,21 @@ class GroupController extends Controller
 
     public function create(AddGroupRequest $request, AddGroupService $addGroupService): array
     {
-        $data = $request->validated();
-        $addGroupService->add(
-            auth()->id(),
-            (int) $data['vk_group_id'],
-            (int) $data['vk_client_id'],
-            $data['vk_access_token']
-        );
-        return [
-            'success' => true
-        ];
+        try {
+            $data = $request->validated();
+            $addGroupService->add(
+                $data['vk_group_link'],
+                auth()->id()
+            );
+            return [
+                'success' => true
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'text' => $e->getMessage()
+            ];
+        }
     }
 
     public function read(string $vkGroupId): array

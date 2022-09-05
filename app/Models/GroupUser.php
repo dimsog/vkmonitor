@@ -14,6 +14,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUser query()
  * @mixin \Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $group_id
+ * @property int $user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereUserId($value)
  */
 class GroupUser extends Model
 {

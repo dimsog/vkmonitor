@@ -14,21 +14,14 @@ class AddGroupRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'vk_group_id.required' => 'Укажите идентификатор группы',
-            'vk_group_id.integer' => 'Идентификатор группы должен быть числом',
-            'vk_client_id.required' => 'Укажите ID приложения',
-            'vk_client_id.integer' => 'ID приложения не является числом',
-            'vk_access_token.required' => 'Укажите access token',
-            'vk_access_token.string' => 'Access token не является строкой',
+            'vk_group_link' => 'Укажите ссылку на группу',
         ];
     }
 
     public function rules(): array
     {
         return [
-            'vk_group_id' => 'required|integer',
-            'vk_client_id' => 'required|integer',
-            'vk_access_token' => 'required|string'
+            'vk_group_link' => 'required|string'
         ];
     }
 }

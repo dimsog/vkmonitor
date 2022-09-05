@@ -10,6 +10,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\Group
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $user_id
+ * @property int $vk_group_id
+ * @property int $vk_client_id
+ * @property string $vk_access_token
+ * @property-read Collection|\App\Models\GroupUser[] $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Group newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Group newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Group query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereVkAccessToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereVkClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereVkGroupId($value)
+ * @mixin \Eloquent
+ */
 class Group extends Model
 {
     use HasFactory;
