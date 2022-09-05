@@ -68,6 +68,8 @@ class VkToken extends Model
         if (empty($vkToken)) {
             throw new RuntimeException('Access token не найден');
         }
+        $vkToken->last_access = time();
+        $vkToken->save();
         return $vkToken->access_token;
     }
 }
