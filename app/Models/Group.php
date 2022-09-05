@@ -17,10 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $user_id
  * @property int $vk_group_id
- * @property int $vk_client_id
- * @property string $vk_access_token
  * @property-read Collection|\App\Models\GroupUser[] $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Group newModelQuery()
