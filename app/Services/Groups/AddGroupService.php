@@ -6,6 +6,7 @@ namespace App\Services\Groups;
 
 use App\Models\GroupOwner;
 use App\Models\Group;
+use App\Services\Groups\Dto\Group as GroupDto;
 use App\Services\Vk\GroupInfoFetcher;
 use App\Services\Vk\Utils\SanitizeVkGroupName;
 
@@ -15,7 +16,7 @@ class AddGroupService
         private readonly GroupInfoFetcher $groupInfoFetcher
     ) {}
 
-    public function add(string $groupLink, int $userId): bool
+    public function add(string $groupLink, int $userId): GroupDto
     {
         $vkGroup = $this->groupInfoFetcher->getGroupInfoById(
             SanitizeVkGroupName::sanitize($groupLink)
@@ -26,6 +27,10 @@ class AddGroupService
             $group->vk_group_id = $vkGroup->id;
             $group->save();
         }
-        return GroupOwner::assignGroupAndUser($group->id, $userId);
+        GroupOwner::assignGroupAndUser($group->id, $userId);
+        return new GroupDto(
+            $group->id,
+            $vkGroup
+        );
     }
 }

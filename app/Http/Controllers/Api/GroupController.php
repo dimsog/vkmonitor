@@ -23,12 +23,15 @@ class GroupController extends Controller
     {
         try {
             $data = $request->validated();
-            $addGroupService->add(
+            $group = $addGroupService->add(
                 $data['vk_group_link'],
                 auth()->id()
             );
             return [
-                'success' => true
+                'success' => true,
+                'data' => [
+                    'group' => $group
+                ]
             ];
         } catch (\Throwable $e) {
             return [
