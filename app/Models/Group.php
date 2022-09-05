@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -61,9 +62,13 @@ class Group extends Model
             ->exists();
     }
 
-    public static function findGroupsByUser(int $userId): Collection
+    public static function findGroupsByUser(int $userId): SupportCollection
     {
-        return static::where('user_id', $userId)
+        $groupIds = GroupOwner::findAssignedGroupIds($userId);
+        if ($groupIds->isEmpty()) {
+            return collect([]);
+        }
+        return static::whereIn('id', $groupIds)
             ->orderByDesc('id')
             ->get();
     }

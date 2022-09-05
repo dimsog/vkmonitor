@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\GroupOwner
@@ -32,5 +33,11 @@ class GroupOwner extends Model
         $model->group_id = $groupId;
         $model->user_id = $userId;
         return $model->save();
+    }
+
+    public static function findAssignedGroupIds(int $userId): Collection
+    {
+        return static::where('user_id', $userId)
+            ->pluck('group_id');
     }
 }
