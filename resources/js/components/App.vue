@@ -27,11 +27,14 @@
 
 <style lang="scss" scoped>
 .app {
+    height: 100%;
     .content {
         display: flex;
+        height: 100%;
 
         .sidebar {
             width: 400px;
+            height: 100%;
             flex-grow: 1;
             padding: 1rem;
             background: rgba(208,215,222,.32);
@@ -45,6 +48,7 @@
 
         .users {
             width: 100%;
+            height: 100%;
             padding: 1rem 0 1rem 1rem;
         }
     }
