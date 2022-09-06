@@ -34,6 +34,7 @@
             width: 400px;
             flex-grow: 1;
             padding: 1rem;
+            background: rgba(208,215,222,.32);
 
             .sidebar__toolbar {
                 display: flex;
