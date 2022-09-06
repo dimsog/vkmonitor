@@ -6,6 +6,7 @@ namespace App\Services\Statistics;
 
 use App\Models\Group;
 use App\Models\GroupUserDiff;
+use App\Models\VkToken;
 use App\Services\Statistics\Dto\Diff;
 use App\Services\Statistics\Dto\User;
 use App\Services\Vk\UsersFetcher;
@@ -27,7 +28,7 @@ class DiffUsersReaderService
         $endDate = $startDate->clone()->addDays(self::LIMIT);
         $startDate->addDays();
         $users = GroupUserDiff::findAllBetweenDates($group->id, $startDate, $endDate);
-        $vkUsers = $this->usersFetcher->fetchAllByIds($users->pluck('user_id'), $group->vk_access_token);
+        $vkUsers = $this->usersFetcher->fetchAllByIds($users->pluck('user_id'), VkToken::findActiveAccessToken());
 
         $result = [];
         for ($i = self::LIMIT - 1; $i >= 0; $i--) {

@@ -24,7 +24,7 @@ class DiffGroupUsersHandler
     public function handle(Group $group): void
     {
         try {
-            $groupInfoFetcher = new GroupInfoFetcher($this->apiClient, $group->vk_access_token);
+            $groupInfoFetcher = new GroupInfoFetcher($this->apiClient);
 
             // данные о группе из вк
             $groupInfo = $groupInfoFetcher->getGroupInfoById($group->vk_group_id);
