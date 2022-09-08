@@ -5,7 +5,7 @@
         <div>
             <div v-for="diff in diffItems" class="diff-item">
                 <div class="diff-item__date">
-                    <strong>{{ diff.weekName }}, {{ diff.date }}</strong>
+                    <strong>{{ diff.weekName }}, {{ getDMYDate(diff.date) }}</strong>
                 </div>
                 <div class="diff-item__users">
                     <a v-for="user in diff.users"
@@ -63,6 +63,7 @@
 </style>
 
 <script>
+import moment from 'moment';
 import DiffUsersReaderService from "../api/DiffUsersReaderService";
 
 export default {
@@ -93,6 +94,10 @@ export default {
                 return '#';
             }
             return 'https://vk.com/' + vkUser.screenName;
+        },
+
+        getDMYDate(date) {
+            return moment(date).format('DD.MM.YYYY');
         }
     },
 
