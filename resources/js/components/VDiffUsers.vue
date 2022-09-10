@@ -7,7 +7,7 @@
                 <div class="diff-item__date">
                     <strong>{{ diff.weekName }}, {{ getDMYDate(diff.date) }}</strong>
                 </div>
-                <div class="diff-item__users">
+                <div v-if="diff.users.length > 0" class="diff-item__users">
                     <a v-for="user in diff.users"
                        class="diff-item-user"
                        :class="{'diff-item-user--subscribed': user.subscribed}"
@@ -22,6 +22,9 @@
                         </div>
                     </a>
                 </div>
+                <div v-else class="diff-item__users diff-item__users--empty">
+                    <span class="text-muted">нет пользователей</span>
+                </div>
             </div>
         </div>
     </div>
@@ -33,6 +36,7 @@
         .diff-item__users {
             display: flex;
             flex-wrap: wrap;
+            padding-bottom: 10px;
             .diff-item-user {
                 display: block;
                 width: 80px;
@@ -56,6 +60,9 @@
                         border-color: #9be9a8;
                     }
                 }
+            }
+            &.diff-item__users--empty {
+                text-align: center;
             }
         }
     }
