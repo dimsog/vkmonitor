@@ -57,4 +57,9 @@ class User extends Authenticatable
         $model->save();
         return $model;
     }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->id, config('app.adminUserIds'));
+    }
 }

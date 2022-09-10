@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AccessTokenController;
 use App\Http\Controllers\Api\GroupsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\SettingsController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,5 @@ Route::middleware('auth')->group(static function () {
     // settings
     Route::get('/api/settings', [SettingsController::class, 'index']);
     Route::post('/api/settings/store', [SettingsController::class, 'store']);
+    Route::get('/api/user/read', [UserController::class, 'read']);
 });
