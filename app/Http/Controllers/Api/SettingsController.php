@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\Settings\SettingsReader;
 use App\Services\Settings\SettingsStore;
@@ -12,6 +13,12 @@ class SettingsController extends Controller
 {
     public function index(): array
     {
+        if (!Auth::user()->isAdmin()) {
+            return [
+                'success' => false,
+                'text' => 'Доступ запрещен'
+            ];
+        }
         return [
             'success' => true,
             'data' => [
@@ -22,6 +29,12 @@ class SettingsController extends Controller
 
     public function store(SettingsStore $settingsStore, Request $request)
     {
+        if (!Auth::user()->isAdmin()) {
+            return [
+                'success' => false,
+                'text' => 'Доступ запрещен'
+            ];
+        }
         $validator = Validator::make(json_decode($request->post('settings'), true), [
             'tokens' => 'required|array',
             'tokens.*.id' => 'required|integer',
