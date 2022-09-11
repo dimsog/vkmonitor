@@ -35,6 +35,7 @@ export default {
             default: 'default'
         }
     },
+    emits: ['hide'],
     data() {
         return {
             modal: null
@@ -43,6 +44,9 @@ export default {
 
     mounted: function () {
         this.modal = new Modal(this.$refs.modal);
+        this.$refs.modal.addEventListener('hidden.bs.modal', () => {
+            this.$emit('hide')
+        });
     },
 
     watch: {

@@ -1,5 +1,5 @@
 <template>
-    <v-modal title="Настройки" :show="showModal" size="lg">
+    <v-modal title="Настройки" :show="showModal" @hide="hide()" size="lg">
         <form v-if="model != null" @submit.prevent="onStoreSettings">
             <div class="mb-4">
                 <strong>Access token:</strong>
@@ -63,6 +63,7 @@ export default {
             default: false
         }
     },
+    emits: ['hide'],
     components: {
         VModal
     },
@@ -107,6 +108,10 @@ export default {
                 .then(() => {
                     this.showModal = false;
                 });
+        },
+
+        hide() {
+            this.$emit('hide');
         }
     },
 

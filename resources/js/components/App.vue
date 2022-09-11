@@ -20,7 +20,7 @@
             </div>
 
             <v-group-editor ref="groupEditor"></v-group-editor>
-            <v-settings v-if="isShowSettings" :show="showSettings"></v-settings>
+            <v-settings v-if="isShowSettings" :show="showSettings" @hide="showSettings = false"></v-settings>
         </div>
     </div>
 </template>

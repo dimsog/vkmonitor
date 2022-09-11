@@ -1,5 +1,5 @@
 <template>
-    <v-modal title="Добавление новой группы" :show="_show">
+    <v-modal title="Добавление новой группы" :show="_show" @hide="hide()">
         <template v-if="model != null">
                 <form @submit.prevent="onAddGroup">
                     <div class="mb-4">
@@ -39,6 +39,11 @@ export default {
         show() {
             this._resetModel();
             this._show = true;
+        },
+
+        hide() {
+            this._resetModel();
+            this._show = false;
         },
 
         async onAddGroup() {
