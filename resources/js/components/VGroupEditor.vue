@@ -48,7 +48,7 @@ export default {
 
         async onAddGroup() {
             try {
-                const response = await GroupService.add(
+                await GroupService.add(
                     this.model.vk_group_link
                 );
             } catch (e) {
