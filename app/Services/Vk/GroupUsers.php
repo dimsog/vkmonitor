@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Vk;
 
-use App\Models\VkToken;
 use App\Services\Vk\Dto\VkGroup;
 use VK\Client\VKApiClient;
 use VK\Exceptions\Api\VKApiParamGroupIdException;
@@ -17,7 +16,8 @@ class GroupUsers
 
 
     public function __construct(
-        private readonly VKApiClient $apiClient
+        private readonly VKApiClient $apiClient,
+        private readonly VkToken $vkToken
     ) {
     }
 
@@ -49,7 +49,7 @@ class GroupUsers
 
     private function fetchUsers(int $vkGroupId, int $page)
     {
-        $response = $this->apiClient->groups()->getMembers(VkToken::findActiveAccessToken(), [
+        $response = $this->apiClient->groups()->getMembers($this->vkToken->findActiveAccessToken(), [
             'group_id' => $vkGroupId,
             'sort' => 'id_asc',
             'offset' => self::USERS_LIMIT * $page

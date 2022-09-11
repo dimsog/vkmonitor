@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Vk;
 
-use App\Models\VkToken;
 use App\Services\Vk\Dto\VkGroup;
 use Illuminate\Support\Collection;
 use RuntimeException;
@@ -14,7 +13,8 @@ class GroupInfoFetcher
 {
     public function __construct(
         private readonly VKApiClient $apiClient,
-        private readonly GroupUsers $groupUsers
+        private readonly GroupUsers $groupUsers,
+        private readonly VkToken $vkToken
     )
     {
     }
@@ -27,7 +27,7 @@ class GroupInfoFetcher
      */
     public function getGroupInfoById(int|string $groupId): VkGroup
     {
-        $response = $this->apiClient->groups()->getById(VkToken::findActiveAccessToken(), [
+        $response = $this->apiClient->groups()->getById($this->vkToken->findActiveAccessToken(), [
             'group_id' => $groupId,
             'fields' => 'members_count'
         ]);
@@ -45,7 +45,7 @@ class GroupInfoFetcher
 
     public function getGroupInfoByIds(array $groupIds): Collection
     {
-        $response = $this->apiClient->groups()->getById(VkToken::findActiveAccessToken(), [
+        $response = $this->apiClient->groups()->getById($this->vkToken->findActiveAccessToken(), [
             'group_ids' => $groupIds,
             'fields' => 'members_count'
         ]);
