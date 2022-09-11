@@ -51,6 +51,7 @@ export default {
                 await GroupService.add(
                     this.model.vk_group_link
                 );
+                this.hide();
             } catch (e) {
                 alert(e.message);
             }
