@@ -75,7 +75,7 @@ class GroupUserDiff extends Model
             /** @var GroupUserDiff $user */
             if ($user->date != $currentDate) {
                 $result[] = new GroupUserDiffItem(
-                    new \DateTimeImmutable($currentDate),
+                    new \DateTimeImmutable($currentDate->format('Y-m-d')),
                     $subscribedUsers,
                     $unsubscribedUsers
                 );
@@ -92,7 +92,7 @@ class GroupUserDiff extends Model
         }
         if (!empty($subscribedUsers) || !empty($unsubscribedUsers)) {
             $result[] = new GroupUserDiffItem(
-                new \DateTimeImmutable($currentDate),
+                new \DateTimeImmutable($currentDate->format('Y-m-d')),
                 $subscribedUsers,
                 $unsubscribedUsers
             );

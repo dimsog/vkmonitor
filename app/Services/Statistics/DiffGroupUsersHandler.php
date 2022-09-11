@@ -16,7 +16,7 @@ use VK\Client\VKApiClient;
 class DiffGroupUsersHandler
 {
     public function __construct(
-        private readonly VKApiClient $apiClient,
+        private readonly GroupInfoFetcher $groupInfoFetcher
     )
     {
     }
@@ -24,11 +24,9 @@ class DiffGroupUsersHandler
     public function handle(Group $group): void
     {
         try {
-            $groupInfoFetcher = new GroupInfoFetcher($this->apiClient);
-
             // данные о группе из вк
-            $groupInfo = $groupInfoFetcher->getGroupInfoById($group->vk_group_id);
-            $users = $groupInfoFetcher->users($groupInfo);
+            $groupInfo = $this->groupInfoFetcher->getGroupInfoById($group->vk_group_id);
+            $users = $this->groupInfoFetcher->users($groupInfo);
 
             if ($group->isNew()) {
                 $group->initUsers($users);

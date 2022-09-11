@@ -12,13 +12,11 @@ use VK\Client\VKApiClient;
 
 class GroupInfoFetcher
 {
-    private GroupUsers $groupUsers;
-
-
     public function __construct(
-        private readonly VKApiClient $apiClient
-    ) {
-        $this->groupUsers = new GroupUsers($this->apiClient);
+        private readonly VKApiClient $apiClient,
+        private readonly GroupUsers $groupUsers
+    )
+    {
     }
 
     /**

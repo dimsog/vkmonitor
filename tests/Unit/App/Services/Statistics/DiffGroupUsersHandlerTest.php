@@ -32,7 +32,7 @@ class DiffGroupUsersHandlerTest extends TestCase
 
         // новые пользователи
         $statisticHandler = $this->makeStatisticHandler(range(1, 100));
-        $statisticHandler->handle($group->id);
+        $statisticHandler->handle($group);
 
         /** @var Group $group */
         $group = Group::findByVkGroupIdOrFail($groupId);
@@ -42,7 +42,7 @@ class DiffGroupUsersHandlerTest extends TestCase
 
         // часть пользователей отписалась, часть подписалась
         $statisticHandler = $this->makeStatisticHandler($newUserIds = range(50, 105));
-        $statisticHandler->handle($group->id);
+        $statisticHandler->handle($group);
 
         /** @var Group $group */
         $group = Group::findByVkGroupIdOrFail($groupId);
@@ -63,19 +63,23 @@ class DiffGroupUsersHandlerTest extends TestCase
         });
     }
 
-    protected function createGroupInfoFetcherMock(int $usersCount): MockInterface
+    protected function createGroupInfoFetcherMock(array $userIds): MockInterface
     {
-        return $this->mock(GroupInfoFetcher::class, static function (MockInterface $mock) use ($usersCount): void {
+        return $this->mock(GroupInfoFetcher::class, static function (MockInterface $mock) use ($userIds): void {
             $mock
                 ->shouldReceive('getGroupInfoById')
-                ->andReturn(new VkGroup(1, 'ApiClub', $usersCount, 'apiclub', '/path/to/photo'));
+                ->andReturn(new VkGroup(1, 'ApiClub', count($userIds), 'apiclub', '/path/to/photo'));
+
+            $mock
+                ->shouldReceive('users')
+                ->andReturn($userIds);
         });
     }
 
     protected function makeStatisticHandler(array $userIds): DiffGroupUsersHandler
     {
         $this->instance(GroupUsers::class, $this->createUsersFetcherMock($userIds));
-        $this->instance(GroupInfoFetcher::class, $this->createGroupInfoFetcherMock(count($userIds)));
+        $this->instance(GroupInfoFetcher::class, $this->createGroupInfoFetcherMock($userIds));
         return $this->app->make(DiffGroupUsersHandler::class);
     }
 }
