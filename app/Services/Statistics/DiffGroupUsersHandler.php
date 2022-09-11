@@ -8,7 +8,6 @@ use Throwable;
 use App\Models\Group;
 use App\Services\Telemetry\Telemetry;
 use App\Services\Vk\GroupInfoFetcher;
-use VK\Client\VKApiClient;
 
 /**
  * Сервис занимается поиском подписавшихся и отписавшихся пользователей
