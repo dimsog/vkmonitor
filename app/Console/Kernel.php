@@ -15,7 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('vk:diff')
+            ->everySixHours()
+            ->runInBackground()
+            ->cron('0 */12 * * *');
     }
 
     /**

@@ -16,9 +16,10 @@ class GroupUsers
 
 
     public function __construct(
-        private readonly string $accessToken,
-        private readonly VKApiClient $apiClient
-    ) {}
+        private readonly VKApiClient $apiClient,
+        private readonly VkToken $vkToken
+    ) {
+    }
 
     /**
      * @param int|string $groupId
@@ -48,7 +49,7 @@ class GroupUsers
 
     private function fetchUsers(int $vkGroupId, int $page)
     {
-        $response = $this->apiClient->groups()->getMembers($this->accessToken, [
+        $response = $this->apiClient->groups()->getMembers($this->vkToken->findActiveAccessToken(), [
             'group_id' => $vkGroupId,
             'sort' => 'id_asc',
             'offset' => self::USERS_LIMIT * $page

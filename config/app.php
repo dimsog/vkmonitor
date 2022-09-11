@@ -17,6 +17,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'adminUserIds' => [
+        1
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -193,9 +197,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
-        \App\Providers\VkServiceProvider::class
+        App\Providers\RouteServiceProvider::class
     ],
 
     /*

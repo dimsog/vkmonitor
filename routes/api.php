@@ -1,9 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\GroupController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,4 +10,3 @@ use App\Http\Controllers\Api\GroupController;
 |
 */
 
-Route::get('/group/read/{vkGroupId}', [GroupController::class, 'read']);

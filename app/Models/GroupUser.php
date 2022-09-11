@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 /**
  * App\Models\VkUser
@@ -15,6 +14,14 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUser query()
  * @mixin \Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $group_id
+ * @property int $user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUser whereUserId($value)
  */
 class GroupUser extends Model
 {
@@ -23,6 +30,8 @@ class GroupUser extends Model
     protected $table = 'group_users';
 
     public $incrementing = false;
+
+    public $timestamps = true;
 
 
     public static function deleteUsersByGroup(int $groupId): int
@@ -37,6 +46,7 @@ class GroupUser extends Model
             $batchedUsers = [];
             foreach ($userIds as $userId) {
                 $batchedUsers[] = [
+                    'created_at' => now(),
                     'group_id' => $groupId,
                     'user_id' => $userId
                 ];

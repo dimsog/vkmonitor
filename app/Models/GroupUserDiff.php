@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use DateTimeInterface;
 use App\Models\Dto\GroupUserDiffItem;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +17,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property \Illuminate\Support\Carbon $date
+ * @property int $group_id
+ * @property int $user_id
+ * @property bool $subscribed
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereSubscribed($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GroupUserDiff whereUserId($value)
  */
 class GroupUserDiff extends Model
 {
@@ -28,7 +40,8 @@ class GroupUserDiff extends Model
 
 
     protected $casts = [
-        'subscribe' => 'boolean'
+        'subscribed' => 'boolean',
+        'date' => 'date'
     ];
 
     public static function addSubscribed(int $groupId, int $userId): void
@@ -62,7 +75,7 @@ class GroupUserDiff extends Model
             /** @var GroupUserDiff $user */
             if ($user->date != $currentDate) {
                 $result[] = new GroupUserDiffItem(
-                    new \DateTimeImmutable($currentDate),
+                    new \DateTimeImmutable($currentDate->format('Y-m-d')),
                     $subscribedUsers,
                     $unsubscribedUsers
                 );
@@ -79,7 +92,7 @@ class GroupUserDiff extends Model
         }
         if (!empty($subscribedUsers) || !empty($unsubscribedUsers)) {
             $result[] = new GroupUserDiffItem(
-                new \DateTimeImmutable($currentDate),
+                new \DateTimeImmutable($currentDate->format('Y-m-d')),
                 $subscribedUsers,
                 $unsubscribedUsers
             );
@@ -110,5 +123,15 @@ class GroupUserDiff extends Model
             'user_id'   => $userId,
             'subscribed' => $subscribe
         ]);
+    }
+
+    public static function findAllBetweenDates(int $groupId, DateTimeInterface $startDate, DateTimeInterface $endDate): Collection
+    {
+        return static::where('group_id', $groupId)
+            ->where('date', '>=', $startDate)
+            ->where('date', '<=', $endDate)
+            ->orderByDesc('date')
+            ->orderByDesc('subscribed')
+            ->get();
     }
 }

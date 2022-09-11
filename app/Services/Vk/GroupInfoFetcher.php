@@ -5,24 +5,29 @@ declare(strict_types=1);
 namespace App\Services\Vk;
 
 use App\Services\Vk\Dto\VkGroup;
+use Illuminate\Support\Collection;
 use RuntimeException;
 use VK\Client\VKApiClient;
 
 class GroupInfoFetcher
 {
-    private GroupUsers $groupUsers;
-
-
     public function __construct(
-        private readonly string $accessToken,
-        private readonly VKApiClient $vkApiClient,
-    ) {
-        $this->groupUsers = new GroupUsers($this->accessToken, $this->vkApiClient);
+        private readonly VKApiClient $apiClient,
+        private readonly GroupUsers $groupUsers,
+        private readonly VkToken $vkToken
+    )
+    {
     }
 
+    /**
+     * @param int|string $groupId
+     * @return VkGroup
+     * @throws \VK\Exceptions\VKApiException
+     * @throws \VK\Exceptions\VKClientException
+     */
     public function getGroupInfoById(int|string $groupId): VkGroup
     {
-        $response = $this->vkApiClient->groups()->getById($this->accessToken, [
+        $response = $this->apiClient->groups()->getById($this->vkToken->findActiveAccessToken(), [
             'group_id' => $groupId,
             'fields' => 'members_count'
         ]);
@@ -36,6 +41,23 @@ class GroupInfoFetcher
             $response[0]['screen_name'],
             $response[0]['photo_200']
         );
+    }
+
+    public function getGroupInfoByIds(array $groupIds): Collection
+    {
+        $response = $this->apiClient->groups()->getById($this->vkToken->findActiveAccessToken(), [
+            'group_ids' => $groupIds,
+            'fields' => 'members_count'
+        ]);
+        return collect(array_map(static function ($item) {
+            return new VkGroup(
+                $item['id'],
+                $item['name'],
+                $item['members_count'],
+                $item['screen_name'],
+                $item['photo_200']
+            );
+        }, $response));
     }
 
     public function users(VkGroup $groupInfo): array
