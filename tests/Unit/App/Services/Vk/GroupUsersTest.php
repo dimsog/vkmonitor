@@ -6,6 +6,7 @@ namespace Tests\Unit\App\Services\Vk;
 
 use App\Services\Vk\Dto\VkGroup;
 use App\Services\Vk\GroupInfoFetcher;
+use App\Services\Vk\VkToken;
 use Mockery\MockInterface;
 use Tests\TestCase;
 use VK\Actions\Groups;
@@ -31,6 +32,13 @@ class GroupUsersTest extends TestCase
             );
         });
         $this->instance(VKApiClient::class, $mock);
+
+        $vkTokenMock = $this->mock(VkToken::class, function (MockInterface$mock): void {
+            $mock->shouldReceive('findActiveAccessToken')
+                ->andReturn('test');
+        });
+        $this->instance(VkToken::class, $vkTokenMock);
+
         $this->groupInfoFetcher = $this->app->make(GroupInfoFetcher::class);
     }
 
