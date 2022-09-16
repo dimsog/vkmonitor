@@ -12,9 +12,7 @@ class UserController extends Controller
         return [
             'success' => true,
             'data' => [
-                'user' => [
-                    'isAdmin' => Auth::user()->isAdmin()
-                ]
+                'user' => Auth::user()->toFrontendArray()
             ]
         ];
     }
