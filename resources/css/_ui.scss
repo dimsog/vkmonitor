@@ -12,3 +12,13 @@
         color: #fff;
     }
 }
+
+.btn-transparent {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    &::after {
+        display: none !important;
+    }
+}

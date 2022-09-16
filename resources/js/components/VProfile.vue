@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown user-profile">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary btn-transparent dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             <img :src="user.avatar" class="user-profile__image" alt="">
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -14,13 +14,6 @@
 <style lang="scss" scoped>
 .user-profile {
     button {
-        background: transparent;
-        border: none;
-        outline: none !important;
-        box-shadow: none !important;
-        &::after {
-            display: none;
-        }
         .user-profile__image {
             width: 32px;
             height: 32px;
