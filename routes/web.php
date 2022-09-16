@@ -36,4 +36,5 @@ Route::middleware('auth')->group(static function () {
     Route::get('/api/settings', [SettingsController::class, 'index']);
     Route::post('/api/settings/store', [SettingsController::class, 'store']);
     Route::get('/api/user/read', [UserController::class, 'read']);
+    Route::post('/api/user/logout', [UserController::class, 'logout']);
 });

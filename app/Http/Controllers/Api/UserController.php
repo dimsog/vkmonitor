@@ -16,4 +16,12 @@ class UserController extends Controller
             ]
         ];
     }
+
+    public function logout(): array
+    {
+        Auth::logout();
+        return [
+            'success' => true
+        ];
+    }
 }
