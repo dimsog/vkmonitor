@@ -6,6 +6,7 @@
     border-radius: 8px;
     &:hover,
     &:visited,
+    &:focus,
     &:active {
         border-color: #0077ff;
         background: #0077ff;
