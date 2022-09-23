@@ -6,6 +6,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddGroupRequest;
+use App\Http\Requests\DeleteGroupRequest;
+use App\Models\Group;
+use App\Models\GroupOwner;
 use App\Services\Groups\AddGroupService;
 use App\Services\Vk\GroupInfoFetcher;
 use VK\Exceptions\Api\VKApiAuthException;
@@ -62,5 +65,18 @@ class GroupController extends Controller
                 'text' => 'При запросе произошла ошибка. Попробуйте позже.'
             ];
         }
+    }
+
+    public function delete(DeleteGroupRequest $request): array
+    {
+        $data = $request->validated();
+        $group = Group::find($data['id']);
+        if ($request->user()->cannot('delete', $group)) {
+            abort(403);
+        }
+        GroupOwner::deleteAssign($group->id, $request->user()->id);
+        return [
+            'success' => true
+        ];
     }
 }

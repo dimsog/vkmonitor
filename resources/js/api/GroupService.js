@@ -10,4 +10,14 @@ export default class {
         }
         return response.data.data.group;
     }
+
+    static async delete(id) {
+        const response = await axios.post('/api/group/delete', {
+            id
+        });
+        if (response.data.success === false) {
+            throw new Error(response.data.text);
+        }
+        return response.data.success;
+    }
 }

@@ -21,7 +21,7 @@
             </div>
 
             <div class="users">
-                <v-diff-users v-if="activeGroup != null" :group="activeGroup"></v-diff-users>
+                <v-diff-users v-if="activeGroup != null" :group="activeGroup" @delete="onDeleteGroup"></v-diff-users>
             </div>
 
             <v-group-editor ref="groupEditor"></v-group-editor>
@@ -112,6 +112,11 @@ export default {
 
         onShowSettings() {
             this.showSettings = true;
+        },
+
+        onDeleteGroup() {
+            this.groups.splice(this.groups.indexOf(this.activeGroup), 1);
+            this.activeGroup = null;
         }
     },
 

@@ -45,9 +45,23 @@ class GroupOwner extends Model
         return $model->save();
     }
 
+    public static function existsGroupAndUser(int $groupId, int $userId): bool
+    {
+        return static::where('group_id', $groupId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
     public static function findAssignedGroupIds(int $userId): Collection
     {
         return static::where('user_id', $userId)
             ->pluck('group_id');
+    }
+
+    public static function deleteAssign(int $groupId, int $userId): void
+    {
+        static::where('group_id', $groupId)
+            ->where('user_id', $userId)
+            ->delete();
     }
 }

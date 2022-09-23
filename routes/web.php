@@ -27,6 +27,7 @@ Route::get('/auth/callback', [AuthController::class, 'callback'])->name('auth.us
 
 Route::middleware('auth')->group(static function () {
     Route::post('/api/group/create', [GroupController::class, 'create']);
+    Route::post('/api/group/delete', [GroupController::class, 'delete']);
     Route::get('/api/group/read/{vkGroupId}', [GroupController::class, 'read']);
     Route::post('/api/access-token/check', [AccessTokenController::class, 'check']);
     Route::get('/api/groups', [GroupsController::class, 'index']);
