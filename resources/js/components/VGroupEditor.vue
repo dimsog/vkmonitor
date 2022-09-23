@@ -24,6 +24,7 @@ export default {
     components: {
         VModal
     },
+    emits: ['create'],
     data() {
         return {
             _show: false,
@@ -51,6 +52,7 @@ export default {
                 await GroupService.add(
                     this.model.vk_group_link
                 );
+                this.$emit('create');
                 this.hide();
             } catch (e) {
                 alert(e.message);

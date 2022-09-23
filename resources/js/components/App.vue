@@ -24,7 +24,7 @@
                 <v-diff-users v-if="activeGroup != null" :group="activeGroup" @delete="onDeleteGroup"></v-diff-users>
             </div>
 
-            <v-group-editor ref="groupEditor"></v-group-editor>
+            <v-group-editor ref="groupEditor" @create="onAddGroup"></v-group-editor>
             <v-settings v-if="isShowSettings" :show="showSettings" @hide="showSettings = false"></v-settings>
         </div>
     </div>
@@ -112,6 +112,10 @@ export default {
 
         onShowSettings() {
             this.showSettings = true;
+        },
+
+        onAddGroup() {
+            this.fetchGroups();
         },
 
         onDeleteGroup() {
