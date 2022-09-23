@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function callback(): RedirectResponse
     {
         $user = User::createOrUpdateFromSocialite(Socialite::driver('vkontakte')->user());
-        Auth::login($user);
+        Auth::login($user, true);
         return redirect()->to('/');
     }
 }

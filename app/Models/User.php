@@ -62,4 +62,14 @@ class User extends Authenticatable
     {
         return in_array($this->id, config('app.adminUserIds'));
     }
+
+    public function toFrontendArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'avatar' => $this->avatar,
+            'isAdmin' => $this->isAdmin()
+        ];
+    }
 }

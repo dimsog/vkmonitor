@@ -12,10 +12,16 @@ class UserController extends Controller
         return [
             'success' => true,
             'data' => [
-                'user' => [
-                    'isAdmin' => Auth::user()->isAdmin()
-                ]
+                'user' => Auth::user()->toFrontendArray()
             ]
+        ];
+    }
+
+    public function logout(): array
+    {
+        Auth::logout();
+        return [
+            'success' => true
         ];
     }
 }
