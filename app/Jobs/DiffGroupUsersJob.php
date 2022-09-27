@@ -47,9 +47,4 @@ class DiffGroupUsersJob implements ShouldQueue, ShouldBeUnique
     {
         Telemetry::exception($e);
     }
-
-    public function uniqueId(): int
-    {
-        return $this->groupId;
-    }
 }
