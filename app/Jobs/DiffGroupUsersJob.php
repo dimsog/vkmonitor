@@ -6,13 +6,12 @@ use App\Models\Group;
 use App\Services\Statistics\DiffGroupUsersHandler;
 use App\Services\Telemetry\Telemetry;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class DiffGroupUsersJob implements ShouldQueue, ShouldBeUnique
+class DiffGroupUsersJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
