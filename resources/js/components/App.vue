@@ -43,6 +43,7 @@
             flex-grow: 1;
             padding: 1rem;
             background: rgba(208,215,222,.32);
+            overflow-y: auto;
 
             .sidebar__toolbar {
                 display: flex;
@@ -55,6 +56,7 @@
             width: 100%;
             height: 100%;
             padding: 1rem 0 1rem 1rem;
+            overflow-y: auto;
         }
     }
 }
