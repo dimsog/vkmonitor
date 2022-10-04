@@ -18,6 +18,8 @@ services:
       dockerfile: docker/php/Dockerfile
     environment:
       - TZ=Europe/Moscow
+      - XDEBUG_CONFIG="remote_host=${DOCKER_XDEBUG_REMOTE_HOST} remote_enable=1"
+      - PHP_IDE_CONFIG="serverName=Docker"
     volumes:
       - ./:/app
   mysql:
