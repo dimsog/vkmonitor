@@ -6,7 +6,9 @@ RUN apt-get update && apt-get install -y libcurl3-dev libxml++2.6-dev curl libzi
 RUN apt-get install -y build-essential libssl-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install gd && \
-    docker-php-ext-enable gd
+    docker-php-ext-enable gd && \
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ADD docker/php/php.ini /usr/local/etc/php/conf.d/40-custom.ini
