@@ -8,7 +8,7 @@
         <template v-else>
             <div class="d-flex justify-between">
                 <div class="w-100">
-                    <h1>{{ group.vkGroup.name }}</h1>
+                    <h3>{{ group.vkGroup.name }}</h3>
                 </div>
                 <div>
                     <button @click.prevent="onDeleteGroup" type="button" class="btn btn-outline-secondary btn-transparent">
