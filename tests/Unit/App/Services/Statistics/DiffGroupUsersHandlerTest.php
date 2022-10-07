@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\App\Services\Statistics;
 
 use App\Models\Group;
-use App\Models\GroupUser;
-use App\Models\GroupUserDiff;
 use App\Services\Statistics\DiffGroupUsersHandler;
 use App\Services\Testing\GroupInfoFetcherMockFactory;
-use App\Services\Vk\Dto\VkGroup;
 use App\Services\Vk\GroupInfoFetcher;
 use App\Services\Vk\GroupUsers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
