@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\GroupUserDiff;
 use App\Services\Statistics\DiffGroupUsersHandler;
+use App\Services\Testing\GroupInfoFetcherMockFactory;
 use App\Services\Vk\Dto\VkGroup;
 use App\Services\Vk\GroupInfoFetcher;
 use App\Services\Vk\GroupUsers;
@@ -19,11 +20,6 @@ class DiffGroupUsersHandlerTest extends TestCase
 {
     use RefreshDatabase;
 
-
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
 
     public function testHandle()
     {
@@ -63,23 +59,10 @@ class DiffGroupUsersHandlerTest extends TestCase
         });
     }
 
-    protected function createGroupInfoFetcherMock(array $userIds): MockInterface
-    {
-        return $this->mock(GroupInfoFetcher::class, static function (MockInterface $mock) use ($userIds): void {
-            $mock
-                ->shouldReceive('getGroupInfoById')
-                ->andReturn(new VkGroup(1, 'ApiClub', count($userIds), 'apiclub', '/path/to/photo'));
-
-            $mock
-                ->shouldReceive('users')
-                ->andReturn($userIds);
-        });
-    }
-
     protected function makeStatisticHandler(array $userIds): DiffGroupUsersHandler
     {
         $this->instance(GroupUsers::class, $this->createUsersFetcherMock($userIds));
-        $this->instance(GroupInfoFetcher::class, $this->createGroupInfoFetcherMock($userIds));
+        $this->instance(GroupInfoFetcher::class, GroupInfoFetcherMockFactory::create($userIds));
         return $this->app->make(DiffGroupUsersHandler::class);
     }
 }
