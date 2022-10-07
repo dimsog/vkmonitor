@@ -33,3 +33,12 @@ services:
       - MYSQL_DATABASE=docker
       - MYSQL_USER=docker
       - MYSQL_PASSWORD=docker
+  mysql_testing:
+      build:
+          context: docker/mysql
+      environment:
+          - TZ=Europe/Moscow
+          - MYSQL_ROOT_PASSWORD=docker
+          - MYSQL_DATABASE=docker
+          - MYSQL_USER=docker
+          - MYSQL_PASSWORD=docker
