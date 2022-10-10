@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 
 class SettingsStore
 {
-    public function store(array $settings)
+    public function store(array $settings): void
     {
         if (!Arr::has($settings, 'tokens')) {
             throw new InvalidArgumentException('Не передан параметр tokens');
