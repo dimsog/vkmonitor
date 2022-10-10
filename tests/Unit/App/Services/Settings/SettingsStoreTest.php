@@ -23,7 +23,7 @@ class SettingsStoreTest extends TestCase
         $this->settingsStore = app(SettingsStore::class);
     }
 
-    public function testEmptyArguments()
+    public function testEmptyArguments(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->settingsStore->store([]);
