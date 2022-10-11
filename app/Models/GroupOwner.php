@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 
 /**
@@ -28,6 +29,10 @@ class GroupOwner extends Model
 {
     use HasFactory;
 
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
 
     public static function assignGroupAndUser(int $groupId, int $userId): bool
     {
